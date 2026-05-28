@@ -6,9 +6,7 @@ import org.springframework.stereotype.Repository;
 import se.yrgo.domain.PlayerCharacter;
 import se.yrgo.exceptions.CharacterNotFoundException;
 
-/**
- * Implementation of the TeamDao interface using JPA. Provides methods for creating, retrieving, updating and deleting teams in the database.
- */
+import java.util.List;
 
 @Repository
 public class PlayerCharacterDaoImpl implements PlayerCharacterDao {
@@ -39,5 +37,10 @@ public class PlayerCharacterDaoImpl implements PlayerCharacterDao {
     @Override
     public PlayerCharacter getCharacterByName(String name) throws CharacterNotFoundException {
         return null;
+    }
+
+    @Override
+    public List<PlayerCharacter> getAllCharacters() {
+        return List.of();
     }
 }
