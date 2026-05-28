@@ -3,7 +3,7 @@ package se.yrgo.services.playerCharacter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.yrgo.dataaccess.PlayerCharacterDao;
+import se.yrgo.dataaccess.PlayerCharacterRepository;
 import se.yrgo.domain.*;
 
 /**
@@ -17,10 +17,10 @@ import se.yrgo.domain.*;
 @Service
 public class PlayerCharacterManagementService {
 
-    private final PlayerCharacterDao dao;
+    private final PlayerCharacterRepository dao;
 
     @Autowired
-    public PlayerCharacterManagementService(PlayerCharacterDao dao) {
+    public PlayerCharacterManagementService(PlayerCharacterRepository dao) {
         this.dao = dao;
     }
 

@@ -2,8 +2,8 @@ package se.yrgo.services.user;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.yrgo.dataaccess.UserDao;
-import se.yrgo.dataaccess.PlayerCharacterDao;
+import se.yrgo.dataaccess.UserRepository;
+import se.yrgo.dataaccess.PlayerCharacterRepository;
 
 /**
  * Service class for managing teams. Provides methods for creating, retrieving, updating and deleting teams,
@@ -15,12 +15,12 @@ import se.yrgo.dataaccess.PlayerCharacterDao;
 public class UserManagementService {
 
 
-    private final PlayerCharacterDao playerCharacterDao;
-    private final UserDao userDao;
+    private final PlayerCharacterRepository playerCharacterRepository;
+    private final UserRepository userRepository;
 
-    public UserManagementService(PlayerCharacterDao playerCharacterDao, UserDao userDao) {
-        this.playerCharacterDao = playerCharacterDao;
-        this.userDao = userDao;
+    public UserManagementService(PlayerCharacterRepository playerCharacterRepository, UserRepository userRepository) {
+        this.playerCharacterRepository = playerCharacterRepository;
+        this.userRepository = userRepository;
     }
 
 }

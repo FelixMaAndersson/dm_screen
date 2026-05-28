@@ -2,21 +2,21 @@ package se.yrgo.services.campaign;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.yrgo.dataaccess.CampaignDao;
-import se.yrgo.dataaccess.PlayerCharacterDao;
+import se.yrgo.dataaccess.CampaignRepository;
+import se.yrgo.dataaccess.PlayerCharacterRepository;
 
 
 @Service
 public class CampaignManagementService {
 
-    private final CampaignDao dao;
-    private final PlayerCharacterDao playerCharacterDao;
+    private final CampaignRepository dao;
+    private final PlayerCharacterRepository playerCharacterRepository;
 
 
     @Autowired
-    public CampaignManagementService(CampaignDao dao, PlayerCharacterDao playerCharacterDao) {
+    public CampaignManagementService(CampaignRepository dao, PlayerCharacterRepository playerCharacterRepository) {
         this.dao = dao;
-        this.playerCharacterDao = playerCharacterDao;
+        this.playerCharacterRepository = playerCharacterRepository;
     }
 
 }
