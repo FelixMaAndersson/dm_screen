@@ -30,6 +30,9 @@ public class User {
 
     }
 
+    public User(String username, String password) {
+    }
+
     public String getUserName() {
         return userName;
     }

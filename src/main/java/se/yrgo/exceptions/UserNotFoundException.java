@@ -6,7 +6,7 @@ package se.yrgo.exceptions;
  */
 public class UserNotFoundException extends Exception {
 
-    public UserNotFoundException(int userId) {
+    public UserNotFoundException(Long userId) {
         super("User with id " + userId + " was not found");
     }
 

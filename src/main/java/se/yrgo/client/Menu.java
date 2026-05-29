@@ -7,7 +7,7 @@ import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.services.campaign.CampaignManagementService;
 import se.yrgo.services.playerCharacter.PlayerCharacterManagementService;
-import se.yrgo.services.user.UserManagementService;
+import se.yrgo.services.user.UserService;
 
 
 import java.util.Scanner;
@@ -18,13 +18,13 @@ public class Menu {
 
     private final Scanner input = new Scanner(System.in);
     private final CampaignManagementService campaignService;
-    private final UserManagementService userService;
+    private final UserService userService;
     private final PlayerCharacterManagementService characterService;
 
 
     @Autowired
     public Menu(CampaignManagementService campaignService,
-                UserManagementService userService,
+                UserService userService,
                 PlayerCharacterManagementService characterService) {
         this.campaignService = campaignService;
         this.userService = userService;
