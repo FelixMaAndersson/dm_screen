@@ -9,11 +9,6 @@ import se.yrgo.exceptions.UserNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Service class for managing teams. Provides methods for creating, retrieving, updating and deleting teams,
- * as well as adding players to teams while enforcing business rules such as salary cap and maximum number of players.
- */
-
 @Service
 @Transactional
 public class UserService {
@@ -38,9 +33,10 @@ public class UserService {
                         new UserNotFoundException(id));
     }
 
-    public User getUserByUsername(String name) {
+    public User getUserByUsername(String name) throws UserNotFoundException {
 
-        return repository.findByUserName(name);
+        return repository.findByUserName(name)
+                .orElseThrow(() -> new UserNotFoundException(name));
     }
 
     public void deleteUser(Long id) {

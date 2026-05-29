@@ -6,21 +6,13 @@ package se.yrgo.exceptions;
  */
 public class CampaignNotFoundException extends Exception {
 
-    /**
-     * Creates a new exception with the league name that was not found.
-     *
-     * @param name the name of the league that could not be found
-     */
+
     public CampaignNotFoundException(String name) {
         super("Campaign: " + name + " not found.");
     }
 
-    /**
-     * Creates a new exception with the league ID that was not found.
-     *
-     * @param id the ID of the league that could not be found
-     */
-    public CampaignNotFoundException(int id) {
+
+    public CampaignNotFoundException(Long id) {
         super("Campaign with id: " + id + " not found.");
     }
 }
