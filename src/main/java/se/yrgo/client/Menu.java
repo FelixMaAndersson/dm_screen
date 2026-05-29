@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
-import se.yrgo.services.campaign.CampaignManagementService;
-import se.yrgo.services.playerCharacter.PlayerCharacterManagementService;
-import se.yrgo.services.user.UserManagementService;
+import se.yrgo.services.campaign.CampaignService;
+import se.yrgo.services.playerCharacter.PlayerCharacterService;
+import se.yrgo.services.user.UserService;
 
 
 import java.util.Scanner;
@@ -17,15 +17,15 @@ import java.util.Scanner;
 public class Menu {
 
     private final Scanner input = new Scanner(System.in);
-    private final CampaignManagementService campaignService;
-    private final UserManagementService userService;
-    private final PlayerCharacterManagementService characterService;
+    private final CampaignService campaignService;
+    private final UserService userService;
+    private final PlayerCharacterService characterService;
 
 
     @Autowired
-    public Menu(CampaignManagementService campaignService,
-                UserManagementService userService,
-                PlayerCharacterManagementService characterService) {
+    public Menu(CampaignService campaignService,
+                UserService userService,
+                PlayerCharacterService characterService) {
         this.campaignService = campaignService;
         this.userService = userService;
         this.characterService = characterService;
