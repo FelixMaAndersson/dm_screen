@@ -10,9 +10,9 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int playerId;
+    private Long userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String userName;
     @Column(nullable = false, length = 20)
     private String password;
