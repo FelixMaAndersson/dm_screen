@@ -18,7 +18,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    public User createUser (String name, String password) {
+    public User createUser(String name, String password) {
 
         User user = new User(name, password);
 
@@ -45,5 +45,17 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return repository.findAll();
+    }
+
+    public User updateUser(Long id, String name, String password)
+            throws UserNotFoundException {
+
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        user.setName(name);
+        user.setPassword(password);
+
+        return repository.save(user);
     }
 }

@@ -10,6 +10,7 @@ import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.user.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -49,6 +50,16 @@ public class CampaignService {
 
     public List<Campaign> getAllCampaigns() {
         return repository.findAll();
+    }
+
+    public Campaign updateCampaign(Long id, String name, String description, User dm) throws CampaignNotFoundException {
+        Campaign campaign = repository.findById(id)
+                .orElseThrow(() -> new CampaignNotFoundException(id));
+
+        campaign.setName(name);
+        campaign.setDescription(description);
+        campaign.setDm(dm);
+        return repository.save(campaign);
     }
 
 }

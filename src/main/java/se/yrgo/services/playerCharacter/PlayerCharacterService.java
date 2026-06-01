@@ -8,6 +8,7 @@ import se.yrgo.domain.*;
 import se.yrgo.dto.CreatePlayerCharacterRequest;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
+import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.campaign.CampaignService;
 
 import java.util.List;
@@ -66,5 +67,24 @@ public class PlayerCharacterService {
     public List<PlayerCharacter> getCharactersForCampaign(Long campaignId) {
         return repository.findByCampaignId(campaignId);
     }
+
+    public PlayerCharacter updateCharacter(
+            Long id,
+            String name,
+            CharacterRace race,
+            CharacterClass characterClass,
+            int level) throws UserNotFoundException {
+
+        PlayerCharacter character = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        character.setName(name);
+        character.setRace(race);
+        character.setCharacterClass(characterClass);
+        character.setLevel(level);
+
+        return repository.save(character);
+    }
+
 
 }
