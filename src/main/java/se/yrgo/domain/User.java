@@ -13,15 +13,15 @@ public class User {
     private Long userId;
 
     @Column(nullable = false, length = 50, unique = true)
-    private String userName;
+    private String name;
     @Column(nullable = false, length = 20)
     private String password;
 
     @OneToMany(mappedBy = "dm")
     private Set<Campaign> campaigns = new HashSet<>();
 
-    public User(String userName, String password, Set<Campaign> campaigns) {
-        this.userName = userName;
+    public User(String name, String password, Set<Campaign> campaigns) {
+        this.name = name;
         this.password = password;
         this.campaigns = campaigns;
     }
@@ -30,15 +30,17 @@ public class User {
 
     }
 
-    public User(String username, String password) {
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String userName) {
+        this.name = userName;
     }
 
     public String getPassword() {

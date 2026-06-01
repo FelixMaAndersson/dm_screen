@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
-    Optional<Campaign> findByCampaignName(String name);
+    Optional<Campaign> findByName(String name);
 
 }

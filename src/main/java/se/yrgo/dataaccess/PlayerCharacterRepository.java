@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter, Long> {
 
-    Optional<PlayerCharacter> findByCharacterName(String name);
+    Optional<PlayerCharacter> findByName(String name);
 
     List<PlayerCharacter> findByCampaignId(Long campaignId);
 }

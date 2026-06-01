@@ -6,6 +6,8 @@ import se.yrgo.dataaccess.CampaignRepository;
 import se.yrgo.domain.Campaign;
 import se.yrgo.domain.User;
 import se.yrgo.exceptions.CampaignNotFoundException;
+import se.yrgo.exceptions.UserNotFoundException;
+import se.yrgo.services.user.UserService;
 
 import java.util.List;
 
@@ -14,14 +16,17 @@ import java.util.List;
 public class CampaignService {
 
     private final CampaignRepository repository;
+    private final UserService userService;
 
 
     @Autowired
-    public CampaignService(CampaignRepository repository) {
+    public CampaignService(CampaignRepository repository, UserService userService) {
         this.repository = repository;
+        this.userService = userService;
     }
 
-    public Campaign createCampaign(String name, User dm) {
+    public Campaign createCampaign(String name, Long dmId) throws UserNotFoundException {
+        User dm = userService.getUserById(dmId);
 
         Campaign campaign = new Campaign(name, dm);
 
@@ -34,7 +39,7 @@ public class CampaignService {
     }
 
     public Campaign getCampaignByName(String name) throws CampaignNotFoundException {
-        return repository.findByCampaignName(name)
+        return repository.findByName(name)
                 .orElseThrow(() -> new CampaignNotFoundException(name));
     }
 
