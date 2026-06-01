@@ -21,9 +21,9 @@ public class CampaignService {
         this.repository = repository;
     }
 
-    public Campaign createCampaign(String name, User dm) {
+    public Campaign createCampaign(String name, String description ,User dm) {
 
-        Campaign campaign = new Campaign(name, dm);
+        Campaign campaign = new Campaign(name, description, dm);
 
         return repository.save(campaign);
     }

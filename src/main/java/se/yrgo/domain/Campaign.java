@@ -35,11 +35,6 @@ public class Campaign {
 
     }
 
-    public Campaign(String name, User dm) {
-        this.name = name;
-        this.dm = dm;
-    }
-
     public String getName() {
         return name;
     }
