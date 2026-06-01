@@ -2,6 +2,7 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.User;
+import se.yrgo.dto.UpdateUserRequest;
 import se.yrgo.dto.UserResponse;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.user.UserService;
@@ -45,6 +46,24 @@ public class UserController {
     @GetMapping("/{id}")
     public User findUserById(@PathVariable Long id) throws UserNotFoundException {
         return service.getUserById(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserRequest user)
+            throws UserNotFoundException {
+
+        User updatedUser = service.updateUser(
+                id,
+                user.name(),
+                user.password()
+        );
+
+        return new UserResponse(
+                updatedUser.getId(),
+                updatedUser.getName()
+        );
     }
 
 }
