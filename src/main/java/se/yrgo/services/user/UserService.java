@@ -44,4 +44,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    public List<User> getAllUsers() {
+        return repository.findAll();
+    }
 }
