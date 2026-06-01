@@ -42,6 +42,9 @@ public class PlayerCharacter {
 
     }
 
+    public PlayerCharacter(String name, CharacterRace race, CharacterClass characterClass, int level, Campaign campaign) {
+    }
+
     public User getUser() {
         return user;
     }
