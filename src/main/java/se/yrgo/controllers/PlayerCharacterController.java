@@ -1,9 +1,9 @@
 package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import se.yrgo.domain.Campaign;
 import se.yrgo.domain.PlayerCharacter;
 import se.yrgo.dto.CreatePlayerCharacterRequest;
+import se.yrgo.dto.PlayerCharacterResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.services.playerCharacter.PlayerCharacterService;
@@ -21,10 +21,13 @@ public class PlayerCharacterController {
     }
 
     @GetMapping
-    public List<PlayerCharacter> getAllCharacters(
+    public List<PlayerCharacterResponse> getAllCharacters(
             @PathVariable Long campaignId) {
 
-        return service.getCharactersForCampaign(campaignId);
+        return service.getCharactersForCampaign(campaignId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -33,17 +36,31 @@ public class PlayerCharacterController {
     }
 
     @PostMapping
-    public PlayerCharacter createCharacter(
+    public PlayerCharacterResponse createCharacter(
             @PathVariable Long campaignId,
             @RequestBody CreatePlayerCharacterRequest request)
             throws CampaignNotFoundException {
 
-        return service.createCharacter(campaignId, request);
+        PlayerCharacter character = service.createCharacter(campaignId, request);
+
+        return toResponse(character);
     }
 
     @DeleteMapping("/{id}")
     public void deleteCharacter(@PathVariable Long id) {
         service.deleteCharacter(id);
+    }
+
+    private PlayerCharacterResponse toResponse(PlayerCharacter character) {
+        return new PlayerCharacterResponse(
+                character.getId(),
+                character.getName(),
+                character.getRace().name(),
+                character.getCharacterClass().name(),
+                character.getLevel(),
+                character.getCampaign().getId(),
+                character.getCampaign().getName()
+        );
     }
 
 }

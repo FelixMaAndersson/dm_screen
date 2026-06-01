@@ -7,7 +7,6 @@ import se.yrgo.domain.User;
 import se.yrgo.exceptions.UserNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,9 +18,9 @@ public class UserService {
         this.repository = repository;
     }
 
-    public User createUser (String username, String password) {
+    public User createUser (String name, String password) {
 
-        User user = new User(username, password);
+        User user = new User(name, password);
 
         return repository.save(user);
     }
@@ -35,7 +34,7 @@ public class UserService {
 
     public User getUserByUsername(String name) throws UserNotFoundException {
 
-        return repository.findByUserName(name)
+        return repository.findByName(name)
                 .orElseThrow(() -> new UserNotFoundException(name));
     }
 

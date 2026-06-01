@@ -36,6 +36,8 @@ public class Campaign {
     }
 
     public Campaign(String name, User dm) {
+        this.name = name;
+        this.dm = dm;
     }
 
     public String getName() {
@@ -60,5 +62,9 @@ public class Campaign {
 
     public void setDm(User dm) {
         this.dm = dm;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

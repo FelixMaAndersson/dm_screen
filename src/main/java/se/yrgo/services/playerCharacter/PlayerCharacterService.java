@@ -51,7 +51,7 @@ public class PlayerCharacterService {
     }
 
     public PlayerCharacter getCharacterByName(String name) throws CharacterNotFoundException {
-        return repository.findByCharacterName(name)
+        return repository.findByName(name)
                 .orElseThrow(() -> new CharacterNotFoundException(name));
     }
 

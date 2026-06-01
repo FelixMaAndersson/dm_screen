@@ -43,6 +43,11 @@ public class PlayerCharacter {
     }
 
     public PlayerCharacter(String name, CharacterRace race, CharacterClass characterClass, int level, Campaign campaign) {
+        this.name = name;
+        this.race = race;
+        this.characterClass = characterClass;
+        this.level = level;
+        this.campaign = campaign;
     }
 
     public User getUser() {
@@ -93,4 +98,7 @@ public class PlayerCharacter {
         this.campaign = campaign;
     }
 
+    public Long getId() {
+        return id;
+    }
 }
