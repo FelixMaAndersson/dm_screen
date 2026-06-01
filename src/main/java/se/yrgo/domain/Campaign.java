@@ -35,6 +35,9 @@ public class Campaign {
 
     }
 
+    public Campaign(String name, User dm) {
+    }
+
     public String getName() {
         return name;
     }
