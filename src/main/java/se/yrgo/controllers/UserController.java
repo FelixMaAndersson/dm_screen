@@ -47,4 +47,22 @@ public class UserController {
         return service.getUserById(id);
     }
 
+    @PutMapping("/{id}")
+    public UserResponse updateUser(
+            @PathVariable Long id,
+            @RequestBody User user)
+            throws UserNotFoundException {
+
+        User updatedUser = service.updateUser(
+                id,
+                user.getName(),
+                user.getPassword()
+        );
+
+        return new UserResponse(
+                updatedUser.getId(),
+                updatedUser.getName()
+        );
+    }
+
 }

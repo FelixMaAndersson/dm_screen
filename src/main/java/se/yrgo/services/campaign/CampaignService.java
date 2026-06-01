@@ -52,13 +52,13 @@ public class CampaignService {
         return repository.findAll();
     }
 
-    public Campaign updateCampaign(Long id, String name, String description, User dm) throws CampaignNotFoundException {
+    public Campaign updateCampaign(Long id, String name, String description, Long dmId) throws CampaignNotFoundException {
         Campaign campaign = repository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(id));
 
         campaign.setName(name);
         campaign.setDescription(description);
-        campaign.setDm(dm);
+        campaign.setDm(dmId);
         return repository.save(campaign);
     }
 
