@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.PlayerCharacterRepository;
 import se.yrgo.domain.*;
+import se.yrgo.dto.CreatePlayerCharacterRequest;
+import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
+import se.yrgo.services.campaign.CampaignService;
 
 import java.util.List;
 
@@ -15,24 +18,30 @@ import java.util.List;
 public class PlayerCharacterService {
 
     private final PlayerCharacterRepository repository;
+    private final CampaignService campaignService;
 
     @Autowired
-    public PlayerCharacterService(PlayerCharacterRepository repository) {
+    public PlayerCharacterService(PlayerCharacterRepository repository, CampaignService campaignService) {
         this.repository = repository;
+        this.campaignService = campaignService;
     }
 
 
-    public PlayerCharacter createCharacter(User user, String name, CharacterRace race, CharacterClass characterClass, int level, Campaign campaign) {
+    public PlayerCharacter createCharacter(
+            Long campaignId,
+            CreatePlayerCharacterRequest request) throws CampaignNotFoundException {
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(
-                user,
-                name,
-                race,
-                characterClass,
-                level,
+        Campaign campaign = campaignService.getCampaignById(campaignId);
+
+        PlayerCharacter character = new PlayerCharacter(
+                request.name(),
+                request.race(),
+                request.characterClass(),
+                request.level(),
                 campaign
         );
-        return repository.save(playerCharacter);
+
+        return repository.save(character);
     }
 
 
@@ -52,6 +61,10 @@ public class PlayerCharacterService {
 
     public List<PlayerCharacter> getAllCharacters() {
         return repository.findAll();
+    }
+
+    public List<PlayerCharacter> getCharactersForCampaign(Long campaignId) {
+        return repository.findByCampaignId(campaignId);
     }
 
 }

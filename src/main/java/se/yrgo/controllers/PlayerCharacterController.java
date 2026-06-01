@@ -1,16 +1,17 @@
 package se.yrgo.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.Campaign;
 import se.yrgo.domain.PlayerCharacter;
+import se.yrgo.dto.CreatePlayerCharacterRequest;
+import se.yrgo.exceptions.CampaignNotFoundException;
+import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.services.playerCharacter.PlayerCharacterService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/characters")
+@RequestMapping("/api/campaigns/{campaignId}/characters")
 public class PlayerCharacterController {
 
     private final PlayerCharacterService service;
@@ -20,15 +21,29 @@ public class PlayerCharacterController {
     }
 
     @GetMapping
-    public List<PlayerCharacter> getAllCharacters() {
-        return service.getAllCharacters();
+    public List<PlayerCharacter> getAllCharacters(
+            @PathVariable Long campaignId) {
+
+        return service.getCharactersForCampaign(campaignId);
     }
 
-    @GetMapping
-    public PlayerCharacterService createCharacter() {
-return null;
+    @GetMapping("/{id}")
+    public PlayerCharacter getCharacterById(@PathVariable Long id) throws CharacterNotFoundException {
+        return service.getCharacterById(id);
     }
 
+    @PostMapping
+    public PlayerCharacter createCharacter(
+            @PathVariable Long campaignId,
+            @RequestBody CreatePlayerCharacterRequest request)
+            throws CampaignNotFoundException {
 
+        return service.createCharacter(campaignId, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCharacter(@PathVariable Long id) {
+        service.deleteCharacter(id);
+    }
 
 }
