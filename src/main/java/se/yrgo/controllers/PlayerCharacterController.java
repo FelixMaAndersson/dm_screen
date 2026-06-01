@@ -5,6 +5,7 @@ import se.yrgo.domain.PlayerCharacter;
 import se.yrgo.domain.User;
 import se.yrgo.dto.CreatePlayerCharacterRequest;
 import se.yrgo.dto.PlayerCharacterResponse;
+import se.yrgo.dto.UpdatePlayerCharacterRequest;
 import se.yrgo.dto.UserResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
@@ -69,15 +70,15 @@ public class PlayerCharacterController {
     @PutMapping("/{id}")
     public PlayerCharacterResponse updatePlayerCharacter(
             @PathVariable Long id,
-            @RequestBody PlayerCharacter playerCharacter)
+            @RequestBody UpdatePlayerCharacterRequest playerCharacter)
             throws UserNotFoundException {
 
         PlayerCharacter updatedPlayerCharacter = service.updateCharacter(
                 id,
-                playerCharacter.getName(),
-                playerCharacter.getRace(),
-                playerCharacter.getCharacterClass(),
-                playerCharacter.getLevel()
+                playerCharacter.name(),
+                playerCharacter.race(),
+                playerCharacter.characterClass(),
+                playerCharacter.level()
         );
 
         return new PlayerCharacterResponse(
