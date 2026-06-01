@@ -3,7 +3,7 @@ package se.yrgo.services.playerCharacter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.yrgo.dataaccess.PlayerRepository;
+import se.yrgo.dataaccess.PlayerCharacterRepository;
 import se.yrgo.domain.*;
 import se.yrgo.exceptions.CharacterNotFoundException;
 
@@ -14,10 +14,10 @@ import java.util.List;
 @Transactional
 public class PlayerCharacterService {
 
-    private final PlayerRepository repository;
+    private final PlayerCharacterRepository repository;
 
     @Autowired
-    public PlayerCharacterService(PlayerRepository repository) {
+    public PlayerCharacterService(PlayerCharacterRepository repository) {
         this.repository = repository;
     }
 

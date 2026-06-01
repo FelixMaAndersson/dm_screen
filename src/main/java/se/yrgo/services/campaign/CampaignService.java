@@ -3,7 +3,6 @@ package se.yrgo.services.campaign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.yrgo.dataaccess.CampaignRepository;
-import se.yrgo.dataaccess.PlayerRepository;
 import se.yrgo.domain.Campaign;
 import se.yrgo.domain.User;
 import se.yrgo.exceptions.CampaignNotFoundException;

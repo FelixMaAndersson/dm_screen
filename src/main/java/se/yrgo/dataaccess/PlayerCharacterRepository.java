@@ -5,7 +5,7 @@ import se.yrgo.domain.PlayerCharacter;
 
 import java.util.Optional;
 
-public interface PlayerRepository extends JpaRepository<PlayerCharacter, Long> {
+public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter, Long> {
 
     Optional<PlayerCharacter> findByCharacterName(String name);
 }
