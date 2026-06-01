@@ -63,4 +63,8 @@ public class Campaign {
     public void setDm(User dm) {
         this.dm = dm;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

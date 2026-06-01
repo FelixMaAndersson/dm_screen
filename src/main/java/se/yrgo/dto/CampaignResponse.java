@@ -1,4 +1,8 @@
 package se.yrgo.dto;
 
-public class CampaignResponse {
+public record CampaignResponse(
+        Long id,
+        String name,
+        String dmName
+) {
 }

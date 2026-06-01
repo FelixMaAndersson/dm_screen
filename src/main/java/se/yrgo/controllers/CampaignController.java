@@ -2,6 +2,7 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.Campaign;
+import se.yrgo.dto.CampaignResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.campaign.CampaignService;
@@ -20,8 +21,15 @@ public class CampaignController {
     }
 
     @GetMapping
-    public List<Campaign> getAllCampaigns() {
-        return service.getAllCampaigns();
+    public List<CampaignResponse> getAllCampaigns() {
+        return service.getAllCampaigns()
+                .stream()
+                .map(campaign -> new CampaignResponse(
+                        campaign.getId(),
+                        campaign.getName(),
+                        campaign.getDm().getName()
+                ))
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -30,8 +38,18 @@ public class CampaignController {
     }
 
     @PostMapping
-    public Campaign createCampaign(@RequestBody CreateCampaignRequest request) throws UserNotFoundException {
-        return service.createCampaign(request.name(), request.dmId());
+    public CampaignResponse createCampaign(
+            @RequestBody CreateCampaignRequest request)
+            throws UserNotFoundException {
+
+        Campaign campaign =
+                service.createCampaign(request.name(), request.dmId());
+
+        return new CampaignResponse(
+                campaign.getId(),
+                campaign.getName(),
+                campaign.getDm().getName()
+        );
     }
 
     @DeleteMapping("/{id}")
