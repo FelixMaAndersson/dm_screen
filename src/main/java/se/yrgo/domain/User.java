@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false, length = 50, unique = true)
     private String name;
@@ -57,5 +57,9 @@ public class User {
 
     public void setCampaigns(Set<Campaign> campaigns) {
         this.campaigns = campaigns;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

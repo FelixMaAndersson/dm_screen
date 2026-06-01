@@ -98,4 +98,7 @@ public class PlayerCharacter {
         this.campaign = campaign;
     }
 
+    public Long getId() {
+        return id;
+    }
 }

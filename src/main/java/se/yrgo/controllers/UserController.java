@@ -2,6 +2,7 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.User;
+import se.yrgo.dto.UserResponse;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.user.UserService;
 
@@ -18,8 +19,14 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return service.getAllUsers();
+    public List<UserResponse> getAllUsers() {
+        return service.getAllUsers()
+                .stream()
+                .map(user -> new UserResponse(
+                        user.getId(),
+                        user.getName()
+                ))
+                .toList();
     }
 
     @PostMapping
