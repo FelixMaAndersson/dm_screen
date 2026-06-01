@@ -2,6 +2,8 @@ package se.yrgo.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 public class Campaign {
@@ -20,6 +22,9 @@ public class Campaign {
     @JoinColumn(name = "dm_id")
     private User dm;
 
+    @OneToMany(mappedBy = "campaign")
+    private Set<PlayerCharacter> character;
+
     public Campaign(String name, String description, User dm) {
         this.name = name;
         this.description = description;
@@ -31,6 +36,8 @@ public class Campaign {
     }
 
     public Campaign(String name, User dm) {
+        this.name = name;
+        this.dm = dm;
     }
 
     public String getName() {
