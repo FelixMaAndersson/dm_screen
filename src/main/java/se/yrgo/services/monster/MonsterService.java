@@ -52,7 +52,7 @@ public class MonsterService {
     }
 
     public List<Monster> getMonstersByCr(ChallengeRating cr) {
-        return repository.findByChallengeRating(cr);
+        return repository.findByCr(cr);
     }
 
     public List<Monster> getMonstersByType(MonsterType type) {
