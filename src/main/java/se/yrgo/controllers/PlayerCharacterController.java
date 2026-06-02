@@ -2,11 +2,9 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.PlayerCharacter;
-import se.yrgo.domain.User;
 import se.yrgo.dto.CreatePlayerCharacterRequest;
 import se.yrgo.dto.PlayerCharacterResponse;
 import se.yrgo.dto.UpdatePlayerCharacterRequest;
-import se.yrgo.dto.UserResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
