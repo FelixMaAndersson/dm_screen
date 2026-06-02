@@ -5,10 +5,11 @@ import se.yrgo.domain.Monster;
 import se.yrgo.domain.enums.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MonsterRepository extends JpaRepository<Monster, Long> {
 
-    List<Monster> findByName(String name);
+    Optional<Monster> findByName(String name);
 
     List<Monster> findByCr(ChallengeRating cr);
 
