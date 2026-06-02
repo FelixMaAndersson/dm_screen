@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.Campaign;
 import se.yrgo.dto.campaign.CampaignResponse;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;
+import se.yrgo.dto.monster.MonsterResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.campaign.CampaignService;
@@ -31,11 +32,7 @@ public class CampaignController {
         Campaign campaign =
                 service.createCampaign(request.name(), request.dmId());
 
-        return new CampaignResponse(
-                campaign.getId(),
-                campaign.getName(),
-                campaign.getDm().getName()
-        );
+        return toResponse(campaign);
     }
 
     // READ
@@ -44,11 +41,7 @@ public class CampaignController {
     public List<CampaignResponse> getAllCampaigns() {
         return service.getAllCampaigns()
                 .stream()
-                .map(campaign -> new CampaignResponse(
-                        campaign.getId(),
-                        campaign.getName(),
-                        campaign.getDm().getName()
-                ))
+                .map(this::toResponse)
                 .toList();
     }
 
@@ -70,11 +63,7 @@ public class CampaignController {
                 request.description(),
                 request.dmId()
         );
-        return new CampaignResponse(
-                updatedCampaign.getId(),
-                updatedCampaign.getName(),
-                updatedCampaign.getDm().getName()
-        );
+        return toResponse(updatedCampaign);
     }
 
     // DELETE
@@ -82,6 +71,16 @@ public class CampaignController {
     @DeleteMapping("/{id}")
     public void deleteCampaign(@PathVariable Long id) {
         service.deleteCampaign(id);
+    }
+
+    // HELP METHODS
+
+    private CampaignResponse toResponse (Campaign campaign) {
+        return new CampaignResponse(
+                campaign.getId(),
+                campaign.getName(),
+                campaign.getDm().getName()
+        );
     }
 
 

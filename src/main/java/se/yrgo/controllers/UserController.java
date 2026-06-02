@@ -20,16 +20,7 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<UserResponse> getAllUsers() {
-        return service.getAllUsers()
-                .stream()
-                .map(user -> new UserResponse(
-                        user.getId(),
-                        user.getName()
-                ))
-                .toList();
-    }
+    // CREATE
 
     @PostMapping
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
@@ -37,18 +28,25 @@ public class UserController {
                 request.name(),
                 request.password()
         );
-        return new UserResponse(user.getId(), user.getName());
+        return toResponse(user);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        service.deleteUser(id);
+    // READ
+
+    @GetMapping
+    public List<UserResponse> getAllUsers() {
+        return service.getAllUsers()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
     public User findUserById(@PathVariable Long id) throws UserNotFoundException {
         return service.getUserById(id);
     }
+
+    // UPDATE
 
     @PutMapping("/{id}")
     public UserResponse updateUser(
@@ -62,10 +60,20 @@ public class UserController {
                 request.password()
         );
 
-        return new UserResponse(
-                updatedUser.getId(),
-                updatedUser.getName()
-        );
+        return toResponse(updatedUser);
+    }
+
+    // DELETE
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        service.deleteUser(id);
+    }
+
+    // HELP METHOD
+
+    public UserResponse toResponse(User user) {
+        return new UserResponse(user.getId(), user.getName());
     }
 
 }
