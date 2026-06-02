@@ -1,6 +1,4 @@
-package se.yrgo.dto;
-
-import se.yrgo.domain.User;
+package se.yrgo.dto.campaign;
 
 public record CreateCampaignRequest(
         String name,

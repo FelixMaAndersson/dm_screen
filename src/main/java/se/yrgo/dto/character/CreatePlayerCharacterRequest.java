@@ -1,4 +1,4 @@
-package se.yrgo.dto;
+package se.yrgo.dto.character;
 
 import se.yrgo.domain.CharacterClass;
 import se.yrgo.domain.CharacterRace;

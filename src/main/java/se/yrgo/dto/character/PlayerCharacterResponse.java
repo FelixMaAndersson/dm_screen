@@ -1,4 +1,4 @@
-package se.yrgo.dto;
+package se.yrgo.dto.character;
 
 public record PlayerCharacterResponse(
         Long id,
