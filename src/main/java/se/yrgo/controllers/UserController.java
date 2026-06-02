@@ -2,6 +2,7 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.User;
+import se.yrgo.dto.CreateUserRequest;
 import se.yrgo.dto.UpdateUserRequest;
 import se.yrgo.dto.UserResponse;
 import se.yrgo.exceptions.UserNotFoundException;
@@ -31,11 +32,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return service.createUser(
-                user.getName(),
-                user.getPassword()
+    public UserResponse createUser(@RequestBody CreateUserRequest request) {
+        User user = service.createUser(
+                request.name(),
+                request.password()
         );
+        return new UserResponse(user.getId(), user.getName());
     }
 
     @DeleteMapping("/{id}")
