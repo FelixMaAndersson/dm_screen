@@ -1,4 +1,4 @@
-package se.yrgo.dto;
+package se.yrgo.dto.user;
 
 public record UserResponse(
         Long id,

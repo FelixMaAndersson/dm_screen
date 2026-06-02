@@ -1,4 +1,4 @@
-package se.yrgo.dto;
+package se.yrgo.dto.campaign;
 
 public record UpdateCampaignRequest (
         String name,

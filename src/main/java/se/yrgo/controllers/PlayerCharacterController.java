@@ -2,9 +2,9 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.PlayerCharacter;
-import se.yrgo.dto.CreatePlayerCharacterRequest;
-import se.yrgo.dto.PlayerCharacterResponse;
-import se.yrgo.dto.UpdatePlayerCharacterRequest;
+import se.yrgo.dto.character.CreatePlayerCharacterRequest;
+import se.yrgo.dto.character.PlayerCharacterResponse;
+import se.yrgo.dto.character.UpdatePlayerCharacterRequest;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
@@ -68,15 +68,15 @@ public class PlayerCharacterController {
     @PutMapping("/{id}")
     public PlayerCharacterResponse updatePlayerCharacter(
             @PathVariable Long id,
-            @RequestBody UpdatePlayerCharacterRequest playerCharacter)
+            @RequestBody UpdatePlayerCharacterRequest request)
             throws UserNotFoundException {
 
         PlayerCharacter updatedPlayerCharacter = service.updateCharacter(
                 id,
-                playerCharacter.name(),
-                playerCharacter.race(),
-                playerCharacter.characterClass(),
-                playerCharacter.level()
+                request.name(),
+                request.race(),
+                request.characterClass(),
+                request.level()
         );
 
         return new PlayerCharacterResponse(
