@@ -17,18 +17,20 @@ public class EncounterMonster {
     @JoinColumn(name = "encounter_id")
     private Encounter encounter;
 
+    private String name;
     private int currentHp;
     private boolean alive;
     private boolean bbeg;
-    private String lore;
+    private String notes;
 
-    public EncounterMonster(Monster monster, Encounter encounter, int currentHp, boolean alive, boolean bbeg, String lore) {
+    public EncounterMonster(Monster monster, Encounter encounter, String name, int currentHp, boolean alive, boolean bbeg, String notes) {
         this.monster = monster;
         this.encounter = encounter;
+        this.name = name;
         this.currentHp = currentHp;
         this.alive = alive;
         this.bbeg = bbeg;
-        this.lore = lore;
+        this.notes = notes;
     }
 
     public EncounterMonster() {
@@ -45,6 +47,14 @@ public class EncounterMonster {
 
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCurrentHp() {
@@ -71,12 +81,12 @@ public class EncounterMonster {
         this.bbeg = bbeg;
     }
 
-    public String getLore() {
-        return lore;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setLore(String lore) {
-        this.lore = lore;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Monster getMonster() {
