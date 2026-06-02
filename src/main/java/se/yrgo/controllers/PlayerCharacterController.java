@@ -48,7 +48,10 @@ public class PlayerCharacterController {
     }
 
     @GetMapping("/{id}")
-    public PlayerCharacter getCharacterById(@PathVariable Long id) throws CharacterNotFoundException {
+    public PlayerCharacter getCharacterById(
+            @PathVariable Long campaignId,
+            @PathVariable Long id
+    ) throws CharacterNotFoundException {
         return service.getCharacterById(id);
     }
 
@@ -56,6 +59,7 @@ public class PlayerCharacterController {
 
     @PutMapping("/{id}")
     public PlayerCharacterResponse updatePlayerCharacter(
+            @PathVariable Long campaignId,
             @PathVariable Long id,
             @RequestBody UpdatePlayerCharacterRequest request)
             throws UserNotFoundException {
@@ -74,7 +78,9 @@ public class PlayerCharacterController {
 
 
     @DeleteMapping("/{id}")
-    public void deleteCharacter(@PathVariable Long id) {
+    public void deleteCharacter(
+            @PathVariable Long campaignId,
+            @PathVariable Long id) {
         service.deleteCharacter(id);
     }
 
