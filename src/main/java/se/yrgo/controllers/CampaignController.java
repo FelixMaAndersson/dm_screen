@@ -30,7 +30,7 @@ public class CampaignController {
             throws UserNotFoundException {
 
         Campaign campaign =
-                service.createCampaign(request.name(), request.dmId());
+                service.createCampaign(request);
 
         return toResponse(campaign);
     }
@@ -59,9 +59,7 @@ public class CampaignController {
             throws CampaignNotFoundException, UserNotFoundException  {
         Campaign updatedCampaign = service.updateCampaign(
                 id,
-                request.name(),
-                request.description(),
-                request.dmId()
+                request
         );
         return toResponse(updatedCampaign);
     }

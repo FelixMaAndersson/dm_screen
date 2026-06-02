@@ -60,8 +60,8 @@ public class Campaign {
         return dm;
     }
 
-    public void setDm(Long dmId) {
-        this.id = dmId;
+    public void setDm(User dm) {
+        this.dm = dm;
     }
 
     public Long getId() {

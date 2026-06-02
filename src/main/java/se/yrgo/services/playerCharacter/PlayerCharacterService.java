@@ -8,6 +8,7 @@ import se.yrgo.domain.*;
 import se.yrgo.domain.enums.CharacterClass;
 import se.yrgo.domain.enums.CharacterRace;
 import se.yrgo.dto.character.CreatePlayerCharacterRequest;
+import se.yrgo.dto.character.UpdatePlayerCharacterRequest;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
@@ -29,6 +30,7 @@ public class PlayerCharacterService {
         this.campaignService = campaignService;
     }
 
+    // CREATE
 
     public PlayerCharacter createCharacter(
             Long campaignId,
@@ -47,6 +49,7 @@ public class PlayerCharacterService {
         return repository.save(character);
     }
 
+    // READ
 
     public PlayerCharacter getCharacterById(Long id) throws CharacterNotFoundException {
         return repository.findById(id)
@@ -58,10 +61,6 @@ public class PlayerCharacterService {
                 .orElseThrow(() -> new CharacterNotFoundException(name));
     }
 
-    public void deleteCharacter(Long id) {
-        repository.deleteById(id);
-    }
-
     public List<PlayerCharacter> getAllCharacters() {
         return repository.findAll();
     }
@@ -70,23 +69,27 @@ public class PlayerCharacterService {
         return repository.findByCampaignId(campaignId);
     }
 
+    // UPDATE
+
     public PlayerCharacter updateCharacter(
             Long id,
-            String name,
-            CharacterRace race,
-            CharacterClass characterClass,
-            int level) throws UserNotFoundException {
+            UpdatePlayerCharacterRequest request) throws UserNotFoundException {
 
         PlayerCharacter character = repository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
-        character.setName(name);
-        character.setRace(race);
-        character.setCharacterClass(characterClass);
-        character.setLevel(level);
+        character.setName(request.name());
+        character.setRace(request.race());
+        character.setCharacterClass(request.characterClass());
+        character.setLevel(request.level());
 
         return repository.save(character);
     }
 
+    // DELETE
+
+    public void deleteCharacter(Long id) {
+        repository.deleteById(id);
+    }
 
 }
