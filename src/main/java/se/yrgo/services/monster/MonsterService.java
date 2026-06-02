@@ -47,8 +47,9 @@ public class MonsterService {
                 .orElseThrow(() -> new MonsterNotFoundException(id));
     }
 
-    public List<Monster> getMonstersByName(String name) {
-        return repository.findByName(name);
+    public Monster getMonstersByName(String name) throws MonsterNotFoundException {
+        return repository.findByName(name)
+                .orElseThrow(() -> new MonsterNotFoundException(name));
     }
 
     public List<Monster> getMonstersByCr(ChallengeRating cr) {

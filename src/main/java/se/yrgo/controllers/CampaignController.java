@@ -21,6 +21,25 @@ public class CampaignController {
         this.service = service;
     }
 
+    // CREATE
+
+    @PostMapping
+    public CampaignResponse createCampaign(
+            @RequestBody CreateCampaignRequest request)
+            throws UserNotFoundException {
+
+        Campaign campaign =
+                service.createCampaign(request.name(), request.dmId());
+
+        return new CampaignResponse(
+                campaign.getId(),
+                campaign.getName(),
+                campaign.getDm().getName()
+        );
+    }
+
+    // READ
+
     @GetMapping
     public List<CampaignResponse> getAllCampaigns() {
         return service.getAllCampaigns()
@@ -38,25 +57,7 @@ public class CampaignController {
         return service.getCampaignById(id);
     }
 
-    @PostMapping
-    public CampaignResponse createCampaign(
-            @RequestBody CreateCampaignRequest request)
-            throws UserNotFoundException {
-
-        Campaign campaign =
-                service.createCampaign(request.name(), request.dmId());
-
-        return new CampaignResponse(
-                campaign.getId(),
-                campaign.getName(),
-                campaign.getDm().getName()
-        );
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCampaign(@PathVariable Long id) {
-        service.deleteCampaign(id);
-    }
+    // UPDATE
 
     @PutMapping("/{id}")
     public CampaignResponse updateCampaign(
@@ -74,6 +75,13 @@ public class CampaignController {
                 updatedCampaign.getName(),
                 updatedCampaign.getDm().getName()
         );
+    }
+
+    // DELETE
+
+    @DeleteMapping("/{id}")
+    public void deleteCampaign(@PathVariable Long id) {
+        service.deleteCampaign(id);
     }
 
 
