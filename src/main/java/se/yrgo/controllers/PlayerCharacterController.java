@@ -22,6 +22,21 @@ public class PlayerCharacterController {
         this.service = service;
     }
 
+    // CREATE
+
+    @PostMapping
+    public PlayerCharacterResponse createCharacter(
+            @PathVariable Long campaignId,
+            @RequestBody CreatePlayerCharacterRequest request)
+            throws CampaignNotFoundException {
+
+        PlayerCharacter character = service.createCharacter(campaignId, request);
+
+        return toResponse(character);
+    }
+
+    // READ
+
     @GetMapping
     public List<PlayerCharacterResponse> getAllCharacters(
             @PathVariable Long campaignId) {
@@ -37,33 +52,7 @@ public class PlayerCharacterController {
         return service.getCharacterById(id);
     }
 
-    @PostMapping
-    public PlayerCharacterResponse createCharacter(
-            @PathVariable Long campaignId,
-            @RequestBody CreatePlayerCharacterRequest request)
-            throws CampaignNotFoundException {
-
-        PlayerCharacter character = service.createCharacter(campaignId, request);
-
-        return toResponse(character);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCharacter(@PathVariable Long id) {
-        service.deleteCharacter(id);
-    }
-
-    private PlayerCharacterResponse toResponse(PlayerCharacter character) {
-        return new PlayerCharacterResponse(
-                character.getId(),
-                character.getName(),
-                character.getRace().name(),
-                character.getCharacterClass().name(),
-                character.getLevel(),
-                character.getCampaign().getId(),
-                character.getCampaign().getName()
-        );
-    }
+    // UPDATE
 
     @PutMapping("/{id}")
     public PlayerCharacterResponse updatePlayerCharacter(
@@ -79,17 +68,31 @@ public class PlayerCharacterController {
                 request.level()
         );
 
+        return toResponse(updatedPlayerCharacter);
+
+
+    }
+
+    // DELETE
+
+
+    @DeleteMapping("/{id}")
+    public void deleteCharacter(@PathVariable Long id) {
+        service.deleteCharacter(id);
+    }
+
+    // HELP METHODS
+
+    private PlayerCharacterResponse toResponse(PlayerCharacter character) {
         return new PlayerCharacterResponse(
-                updatedPlayerCharacter.getId(),
-                updatedPlayerCharacter.getName(),
-                updatedPlayerCharacter.getRace().name(),
-                updatedPlayerCharacter.getCharacterClass().name(),
-                updatedPlayerCharacter.getLevel(),
-                updatedPlayerCharacter.getCampaign().getId(),
-                updatedPlayerCharacter.getCampaign().getName()
+                character.getId(),
+                character.getName(),
+                character.getRace().name(),
+                character.getCharacterClass().name(),
+                character.getLevel(),
+                character.getCampaign().getId(),
+                character.getCampaign().getName()
         );
-
-
     }
 
 }
