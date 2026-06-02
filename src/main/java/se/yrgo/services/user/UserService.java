@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.User;
+import se.yrgo.dto.user.UpdateUserRequest;
 import se.yrgo.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -18,12 +19,16 @@ public class UserService {
         this.repository = repository;
     }
 
+    // CREATE
+
     public User createUser(String name, String password) {
 
         User user = new User(name, password);
 
         return repository.save(user);
     }
+
+    // READ
 
     public User getUserById(Long id) throws UserNotFoundException {
 
@@ -38,24 +43,27 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(name));
     }
 
-    public void deleteUser(Long id) {
-
-        repository.deleteById(id);
-    }
-
     public List<User> getAllUsers() {
         return repository.findAll();
     }
 
-    public User updateUser(Long id, String name, String password)
+    // UPDATE
+
+    public User updateUser(Long id, UpdateUserRequest request)
             throws UserNotFoundException {
 
         User user = repository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
-        user.setName(name);
-        user.setPassword(password);
+        user.setName(request.name());
+        user.setPassword(request.password());
 
         return repository.save(user);
+    }
+
+    // DELETE
+
+    public void deleteUser(Long id) {
+        repository.deleteById(id);
     }
 }

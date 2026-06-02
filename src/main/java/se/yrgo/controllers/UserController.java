@@ -56,8 +56,7 @@ public class UserController {
 
         User updatedUser = service.updateUser(
                 id,
-                request.name(),
-                request.password()
+                request
         );
 
         return toResponse(updatedUser);

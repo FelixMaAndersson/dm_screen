@@ -62,10 +62,7 @@ public class PlayerCharacterController {
 
         PlayerCharacter updatedPlayerCharacter = service.updateCharacter(
                 id,
-                request.name(),
-                request.race(),
-                request.characterClass(),
-                request.level()
+                request
         );
 
         return toResponse(updatedPlayerCharacter);
