@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.CampaignRepository;
+import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.Campaign;
 import se.yrgo.domain.User;
+import se.yrgo.dto.campaign.CreateCampaignRequest;
+import se.yrgo.dto.campaign.UpdateCampaignRequest;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.user.UserService;
@@ -19,22 +22,32 @@ import java.util.Optional;
 public class CampaignService {
 
     private final CampaignRepository repository;
-    private final UserService userService;
-
+    private final UserRepository userRepository;
 
     @Autowired
-    public CampaignService(CampaignRepository repository, UserService userService) {
+    public CampaignService(CampaignRepository repository, UserRepository userRepository) {
         this.repository = repository;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
-    public Campaign createCampaign(String name, Long dmId) throws UserNotFoundException {
-        User dm = userService.getUserById(dmId);
 
-        Campaign campaign = new Campaign(name, dm);
+    // CREATE
+
+    public Campaign createCampaign(CreateCampaignRequest request) throws UserNotFoundException {
+
+        User dm = userRepository.findById(request.dmId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(request.dmId()));
+
+        Campaign campaign = new Campaign(
+                request.name(),
+                dm
+        );
 
         return repository.save(campaign);
     }
+
+    // READ
 
     public Campaign getCampaignById(Long id) throws CampaignNotFoundException {
         return repository.findById(id)
@@ -46,22 +59,30 @@ public class CampaignService {
                 .orElseThrow(() -> new CampaignNotFoundException(name));
     }
 
-    public void deleteCampaign(Long id) {
-        repository.deleteById(id);
-    }
-
     public List<Campaign> getAllCampaigns() {
         return repository.findAll();
     }
 
-    public Campaign updateCampaign(Long id, String name, String description, Long dmId) throws CampaignNotFoundException {
+    // UPDATE
+
+    public Campaign updateCampaign(Long id, UpdateCampaignRequest request) throws CampaignNotFoundException, UserNotFoundException {
         Campaign campaign = repository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(id));
 
-        campaign.setName(name);
-        campaign.setDescription(description);
-        campaign.setDm(dmId);
+
+        User dm = userRepository.findById(request.dmId())
+                .orElseThrow(() -> new UserNotFoundException(request.dmId()));
+
+        campaign.setName(request.name());
+        campaign.setDescription(request.description());
+        campaign.setDm(dm);
         return repository.save(campaign);
+    }
+
+    // DELETE
+
+    public void deleteCampaign(Long id) {
+        repository.deleteById(id);
     }
 
 }
