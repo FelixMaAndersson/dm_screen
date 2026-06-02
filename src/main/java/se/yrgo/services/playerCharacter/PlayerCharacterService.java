@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.PlayerCharacterRepository;
 import se.yrgo.domain.*;
+import se.yrgo.domain.enums.CharacterClass;
+import se.yrgo.domain.enums.CharacterRace;
 import se.yrgo.dto.character.CreatePlayerCharacterRequest;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.CharacterNotFoundException;

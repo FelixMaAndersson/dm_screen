@@ -1,6 +1,8 @@
 package se.yrgo.domain;
 
 import jakarta.persistence.*;
+import se.yrgo.domain.enums.CharacterClass;
+import se.yrgo.domain.enums.CharacterRace;
 
 @Entity
 public class PlayerCharacter {
