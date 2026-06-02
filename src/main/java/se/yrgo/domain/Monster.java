@@ -1,10 +1,7 @@
 package se.yrgo.domain;
 
 import jakarta.persistence.*;
-import se.yrgo.domain.enums.ChallengeRating;
-import se.yrgo.domain.enums.CreatureSize;
-import se.yrgo.domain.enums.Habitat;
-import se.yrgo.domain.enums.MonsterType;
+import se.yrgo.domain.enums.*;
 
 @Entity
 public class Monster {
@@ -29,17 +26,29 @@ public class Monster {
     private CreatureSize size;
 
     @Enumerated(EnumType.STRING)
+    private Alignment alignment;
+
+    @Enumerated(EnumType.STRING)
     private Habitat habitat;
 
     private String tags;
 
-    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, String tags) {
+    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, Alignment alignment, String tags) {
         this.name = name;
         this.cr = cr;
         this.type = type;
         this.size = size;
         this.habitat = habitat;
+        this.alignment = alignment;
         this.tags = tags;
+    }
+
+    public Alignment getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(Alignment alignment) {
+        this.alignment = alignment;
     }
 
     public Monster() {

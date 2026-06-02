@@ -2,6 +2,7 @@ package se.yrgo.services.campaign;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.CampaignRepository;
 import se.yrgo.domain.Campaign;
 import se.yrgo.domain.User;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 
 @Service
+@Transactional
 public class CampaignService {
 
     private final CampaignRepository repository;
