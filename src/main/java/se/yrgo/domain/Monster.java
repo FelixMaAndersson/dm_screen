@@ -31,5 +31,70 @@ public class Monster {
     @Enumerated(EnumType.STRING)
     private Habitat habitat;
 
+    private String tags;
 
+    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, String tags) {
+        this.name = name;
+        this.cr = cr;
+        this.type = type;
+        this.size = size;
+        this.habitat = habitat;
+        this.tags = tags;
+    }
+
+    public Monster() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ChallengeRating getCr() {
+        return cr;
+    }
+
+    public void setCr(ChallengeRating cr) {
+        this.cr = cr;
+    }
+
+    public MonsterType getType() {
+        return type;
+    }
+
+    public void setType(MonsterType type) {
+        this.type = type;
+    }
+
+    public CreatureSize getSize() {
+        return size;
+    }
+
+    public void setSize(CreatureSize size) {
+        this.size = size;
+    }
+
+    public Habitat getHabitat() {
+        return habitat;
+    }
+
+    public void setHabitat(Habitat habitat) {
+        this.habitat = habitat;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 }
