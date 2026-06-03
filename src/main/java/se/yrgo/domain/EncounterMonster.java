@@ -20,16 +20,16 @@ public class EncounterMonster {
     private String name;
     private int currentHp;
     private boolean alive;
-    private boolean bbeg;
+    private boolean boss;
     private String notes;
 
-    public EncounterMonster(Monster monster, Encounter encounter, String name, int currentHp, boolean alive, boolean bbeg, String notes) {
+    public EncounterMonster(Monster monster, Encounter encounter, String name, int currentHp, boolean alive, boolean boss, String notes) {
         this.monster = monster;
         this.encounter = encounter;
         this.name = name;
         this.currentHp = currentHp;
         this.alive = alive;
-        this.bbeg = bbeg;
+        this.boss = boss;
         this.notes = notes;
     }
 
@@ -73,12 +73,12 @@ public class EncounterMonster {
         this.alive = alive;
     }
 
-    public boolean isBbeg() {
-        return bbeg;
+    public boolean isBoss() {
+        return boss;
     }
 
-    public void setBbeg(boolean bbeg) {
-        this.bbeg = bbeg;
+    public void setBoss(boolean boss) {
+        this.boss = boss;
     }
 
     public String getNotes() {
@@ -96,5 +96,4 @@ public class EncounterMonster {
     public void setMonster(Monster monster) {
         this.monster = monster;
     }
-
 }

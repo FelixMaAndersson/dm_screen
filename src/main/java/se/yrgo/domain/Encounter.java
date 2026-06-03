@@ -16,7 +16,8 @@ public class Encounter {
 
     @Enumerated(EnumType.STRING)
     private Habitat habitat;
-    private int encounterDistance;
+    private int visionDistance;
+
 
     @OneToMany(mappedBy = "encounter")
     private Set<EncounterMonster> encounterMonsters = new HashSet<>();
@@ -34,9 +35,9 @@ public class Encounter {
 
     private String lore;
 
-    public Encounter(Habitat habitat, int encounterDistance, Set<EncounterMonster> encounterMonsters, Difficulty encounterDifficulty, Set<PlayerCharacter> playerCharacters, String lore) {
+    public Encounter(Habitat habitat, int visionDistance, Set<EncounterMonster> encounterMonsters, Difficulty encounterDifficulty, Set<PlayerCharacter> playerCharacters, String lore) {
         this.habitat = habitat;
-        this.encounterDistance = encounterDistance;
+        this.visionDistance = visionDistance;
         this.encounterMonsters = encounterMonsters;
         this.encounterDifficulty = encounterDifficulty;
         this.playerCharacters = playerCharacters;
@@ -59,12 +60,12 @@ public class Encounter {
         this.habitat = habitat;
     }
 
-    public int getEncounterDistance() {
-        return encounterDistance;
+    public int getVisionDistance() {
+        return visionDistance;
     }
 
-    public void setEncounterDistance(int encounterDistance) {
-        this.encounterDistance = encounterDistance;
+    public void setVisionDistance(int visionDistance) {
+        this.visionDistance = visionDistance;
     }
 
     public Set<EncounterMonster> getEncounterMonsters() {

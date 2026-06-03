@@ -9,6 +9,7 @@ public record CreateEncounterMonsterRequest(
         String name,
         int currentHp,
         boolean alive,
+        boolean villain,
         boolean bbeg,
         String lore
         ) {
