@@ -1,4 +1,8 @@
 package se.yrgo.dataaccess;
 
-public interface EncounterRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import se.yrgo.domain.Encounter;
+
+public interface EncounterRepository extends JpaRepository<Encounter, Long> {
+
 }
