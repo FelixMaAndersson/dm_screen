@@ -18,6 +18,9 @@ public class Encounter {
     private Habitat habitat;
     private int visionDistance;
 
+    @ManyToOne
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
 
     @OneToMany(mappedBy = "encounter")
     private Set<EncounterMonster> encounterMonsters = new HashSet<>();
@@ -35,13 +38,10 @@ public class Encounter {
 
     private String lore;
 
-    public Encounter(Habitat habitat, int visionDistance, Set<EncounterMonster> encounterMonsters, Difficulty encounterDifficulty, Set<PlayerCharacter> playerCharacters, String lore) {
+    public Encounter(Habitat habitat, int visionDistance, Campaign campaign) {
         this.habitat = habitat;
         this.visionDistance = visionDistance;
-        this.encounterMonsters = encounterMonsters;
-        this.encounterDifficulty = encounterDifficulty;
-        this.playerCharacters = playerCharacters;
-        this.lore = lore;
+        this.campaign = campaign;
     }
 
     public Encounter() {
@@ -66,6 +66,14 @@ public class Encounter {
 
     public void setVisionDistance(int visionDistance) {
         this.visionDistance = visionDistance;
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
     }
 
     public Set<EncounterMonster> getEncounterMonsters() {

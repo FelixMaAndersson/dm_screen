@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.EncounterMonsterRepository;
 import se.yrgo.domain.EncounterMonster;
-import se.yrgo.dto.EncounterMonster.*;
+import se.yrgo.dto.encounterMonster.*;
 import se.yrgo.exceptions.EncounterMonsterNotFoundException;
 
 import java.util.List;

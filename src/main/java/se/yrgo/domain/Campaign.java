@@ -25,6 +25,9 @@ public class Campaign {
     @OneToMany(mappedBy = "campaign")
     private Set<PlayerCharacter> character;
 
+    @OneToMany(mappedBy = "campaign")
+    private Set<Encounter> encounters;
+
     public Campaign(String name, String description, User dm) {
         this.name = name;
         this.description = description;
@@ -62,6 +65,22 @@ public class Campaign {
 
     public void setDm(User dm) {
         this.dm = dm;
+    }
+
+    public Set<PlayerCharacter> getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Set<PlayerCharacter> character) {
+        this.character = character;
+    }
+
+    public Set<Encounter> getEncounters() {
+        return encounters;
+    }
+
+    public void setEncounters(Set<Encounter> encounters) {
+        this.encounters = encounters;
     }
 
     public Long getId() {
