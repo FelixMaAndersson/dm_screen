@@ -98,4 +98,10 @@ public class EncounterMonsterService {
 
         return repository.save(monster);
     }
+
+    // DELETE
+
+    public void deleteEncounterMonster(Long id) throws EncounterMonsterNotFoundException {
+        repository.deleteById(id);
+    }
 }
