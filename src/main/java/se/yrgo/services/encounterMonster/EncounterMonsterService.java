@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.EncounterMonsterRepository;
 import se.yrgo.domain.EncounterMonster;
-import se.yrgo.dto.EncounterMonster.CreateEncounterMonsterRequest;
-import se.yrgo.dto.EncounterMonster.UpdateEncounterMonsterRequest;
+import se.yrgo.dto.EncounterMonster.*;
 import se.yrgo.exceptions.EncounterMonsterNotFoundException;
 
 import java.util.List;
@@ -55,6 +54,7 @@ public class EncounterMonsterService {
 
     // UPDATE
     public EncounterMonster updateEncounterMonster(Long id, UpdateEncounterMonsterRequest request) {
+
         EncounterMonster encounterMonster = repository.findById(id)
                 .orElseThrow(() -> new EncounterMonsterNotFoundException(id));
 
@@ -68,4 +68,34 @@ public class EncounterMonsterService {
         return repository.save(encounterMonster);
     }
 
+    public EncounterMonster updateHp(Long id, UpdateHpRequest request) {
+        EncounterMonster monster = getEncounterMonsterById(id);
+        monster.setCurrentHp(request.currentHp());
+
+        if (request.currentHp() <= 0) {
+            monster.setAlive(false);
+        }
+
+        return repository.save(monster);
+    }
+
+    public EncounterMonster updateAlive(Long id, UpdateAliveRequest request) {
+
+        EncounterMonster monster = getEncounterMonsterById(id);
+
+        monster.setAlive(request.alive());
+
+        return repository.save(monster);
+    }
+
+    public EncounterMonster updateNotes(
+            Long id,
+            UpdateNotesRequest request) {
+
+        EncounterMonster monster = getEncounterMonsterById(id);
+
+        monster.setNotes(request.notes());
+
+        return repository.save(monster);
+    }
 }
