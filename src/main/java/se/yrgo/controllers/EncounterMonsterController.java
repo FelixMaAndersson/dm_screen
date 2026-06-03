@@ -3,9 +3,7 @@ package se.yrgo.controllers;
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.EncounterMonster;
 import se.yrgo.domain.Monster;
-import se.yrgo.dto.EncounterMonster.CreateEncounterMonsterRequest;
-import se.yrgo.dto.EncounterMonster.EncounterMonsterResponse;
-import se.yrgo.dto.EncounterMonster.UpdateEncounterMonsterRequest;
+import se.yrgo.dto.EncounterMonster.*;
 import se.yrgo.dto.monster.MonsterResponse;
 import se.yrgo.dto.monster.UpdateMonsterRequest;
 import se.yrgo.exceptions.EncounterMonsterNotFoundException;
@@ -65,15 +63,34 @@ public class EncounterMonsterController {
     @PutMapping("/{id}")
     public EncounterMonsterResponse updateEncounterMonster(
             @PathVariable Long id,
-            @RequestBody UpdateEncounterMonsterRequest request
-    ) throws EncounterMonsterNotFoundException {
-        EncounterMonster updatedMonster = service.updateEncounterMonster(
-                id,
-                request
-        );
-        return toResponse(updatedMonster);
+            @RequestBody UpdateEncounterMonsterRequest request) {
+
+        return service.updateEncounterMonster(id, request);
     }
 
+    @PatchMapping("/{id}/hp")
+    public EncounterMonsterResponse updateHp(
+            @PathVariable Long id,
+            @RequestBody UpdateHpRequest request) {
+
+        return service.updateHp(id, request);
+    }
+
+    @PatchMapping("/{id}/alive")
+    public EncounterMonsterResponse updateAlive(
+            @PathVariable Long id,
+            @RequestBody UpdateAliveRequest request) {
+
+        return service.updateAlive(id, request);
+    }
+
+    @PatchMapping("/{id}/hp")
+    public EncounterMonsterResponse updateNotes(
+            @PathVariable Long id,
+            @RequestBody UpdateNotesRequest request) {
+
+        return service.updateNotes(id, request);
+    }
 
     // HELP METHODS
 
