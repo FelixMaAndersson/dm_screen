@@ -5,8 +5,9 @@ import se.yrgo.domain.Monster;
 
 public record EncounterMonsterResponse(
         Long id,
-        Monster monster,
-        Encounter encounter,
+        Long monsterId,
+        String monsterName,
+        Long encounterId,
         int currentHp,
         boolean alive,
         boolean boss,

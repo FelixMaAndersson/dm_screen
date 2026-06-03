@@ -23,7 +23,7 @@ public class EncounterMonsterService {
 
     // CREATE
 
-    public void createEncounterMonster(CreateEncounterMonsterRequest request) {
+    public EncounterMonster createEncounterMonster(CreateEncounterMonsterRequest request) {
         EncounterMonster encounterMonster = new EncounterMonster(
                 request.monster(),
                 request.encounter(),
@@ -33,7 +33,7 @@ public class EncounterMonsterService {
                 request.notes()
         );
 
-        repository.save(encounterMonster);
+       return repository.save(encounterMonster);
 
     }
 
@@ -47,8 +47,20 @@ public class EncounterMonsterService {
         return repository.findAll();
     }
 
-    public List<EncounterMonster> getEncounterMonstersByEncounterId(Long encounterId) {
-        return repository.findByEncounterId(encounterId);
+    public List<EncounterMonsterResponse> getEncounterMonstersByEncounterId(Long encounterId) {
+        return repository.findByEncounterId(encounterId)
+                .stream()
+                .map(em -> new EncounterMonsterResponse(
+                        em.getId(),
+                        em.getMonster().getId(),
+                        em.getMonster().getName(),
+                        em.getEncounter().getId(),
+                        em.getCurrentHp(),
+                        em.isAlive(),
+                        em.isBoss(),
+                        em.getNotes()
+                ))
+                .toList();
     }
 
     // UPDATE
