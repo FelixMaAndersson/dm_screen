@@ -2,12 +2,8 @@ package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.EncounterMonster;
-import se.yrgo.domain.Monster;
 import se.yrgo.dto.EncounterMonster.*;
-import se.yrgo.dto.monster.MonsterResponse;
-import se.yrgo.dto.monster.UpdateMonsterRequest;
 import se.yrgo.exceptions.EncounterMonsterNotFoundException;
-import se.yrgo.exceptions.MonsterNotFoundException;
 import se.yrgo.services.encounterMonster.EncounterMonsterService;
 
 import java.util.List;
@@ -90,6 +86,13 @@ public class EncounterMonsterController {
             @RequestBody UpdateNotesRequest request) {
 
         return service.updateNotes(id, request);
+    }
+
+    // DELETE
+
+    @DeleteMapping("/{id}")
+    public void deleteEncounterMonster(@PathVariable Long id) {
+        service.deleteEncounterMonster(id);
     }
 
     // HELP METHODS
