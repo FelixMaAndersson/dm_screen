@@ -5,7 +5,9 @@ import se.yrgo.domain.EncounterMonster;
 import se.yrgo.domain.Monster;
 import se.yrgo.dto.EncounterMonster.CreateEncounterMonsterRequest;
 import se.yrgo.dto.EncounterMonster.EncounterMonsterResponse;
+import se.yrgo.dto.EncounterMonster.UpdateEncounterMonsterRequest;
 import se.yrgo.dto.monster.MonsterResponse;
+import se.yrgo.dto.monster.UpdateMonsterRequest;
 import se.yrgo.exceptions.EncounterMonsterNotFoundException;
 import se.yrgo.exceptions.MonsterNotFoundException;
 import se.yrgo.services.encounterMonster.EncounterMonsterService;
@@ -56,6 +58,20 @@ public class EncounterMonsterController {
             @PathVariable Long encounterId) {
 
         return service.getEncounterMonstersByEncounterId(encounterId);
+    }
+
+    // UPDATE
+
+    @PutMapping("/{id}")
+    public EncounterMonsterResponse updateEncounterMonster(
+            @PathVariable Long id,
+            @RequestBody UpdateEncounterMonsterRequest request
+    ) throws EncounterMonsterNotFoundException {
+        EncounterMonster updatedMonster = service.updateEncounterMonster(
+                id,
+                request
+        );
+        return toResponse(updatedMonster);
     }
 
 

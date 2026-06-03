@@ -50,21 +50,12 @@ public class EncounterMonsterService {
     public List<EncounterMonsterResponse> getEncounterMonstersByEncounterId(Long encounterId) {
         return repository.findByEncounterId(encounterId)
                 .stream()
-                .map(em -> new EncounterMonsterResponse(
-                        em.getId(),
-                        em.getMonster().getId(),
-                        em.getMonster().getName(),
-                        em.getEncounter().getId(),
-                        em.getCurrentHp(),
-                        em.isAlive(),
-                        em.isBoss(),
-                        em.getNotes()
-                ))
+                .map(this::toResponse)
                 .toList();
     }
 
     // UPDATE
-    public void updateEncounterMonster(Long id, UpdateEncounterMonsterRequest request) {
+    public EncounterMonsterResponse updateEncounterMonster(Long id, UpdateEncounterMonsterRequest request) {
 
         EncounterMonster encounterMonster = getOrThrow(id);
 
@@ -74,33 +65,40 @@ public class EncounterMonsterService {
         encounterMonster.setAlive(request.alive());
         encounterMonster.setBoss(request.boss());
         encounterMonster.setNotes(request.notes());
+
+        return toResponse(encounterMonster);
     }
 
-    public void updateHp(Long id, UpdateHpRequest request) {
-        EncounterMonster monster = getOrThrow(id);
+    public EncounterMonsterResponse updateHp(Long id, UpdateHpRequest request) {
+        EncounterMonster encounterMonster = getOrThrow(id);
 
-        monster.setCurrentHp(request.currentHp());
+        encounterMonster.setCurrentHp(request.currentHp());
 
         if (request.currentHp() <= 0) {
-            monster.setAlive(false);
+            encounterMonster.setAlive(false);
         }
 
+        return toResponse(encounterMonster);
     }
 
-    public void updateAlive(Long id, UpdateAliveRequest request) {
+    public EncounterMonsterResponse updateAlive(Long id, UpdateAliveRequest request) {
 
-        EncounterMonster monster = getOrThrow(id);
+        EncounterMonster encounterMonster = getOrThrow(id);
 
-        monster.setAlive(request.alive());
+        encounterMonster.setAlive(request.alive());
+
+        return toResponse(encounterMonster);
     }
 
-    public void updateNotes(
+    public EncounterMonsterResponse updateNotes(
             Long id,
             UpdateNotesRequest request) {
 
-        EncounterMonster monster = getOrThrow(id);
+        EncounterMonster encounterMonster = getOrThrow(id);
 
-        monster.setNotes(request.notes());
+        encounterMonster.setNotes(request.notes());
+
+        return toResponse(encounterMonster);
     }
 
     // DELETE
@@ -115,5 +113,18 @@ public class EncounterMonsterService {
     private EncounterMonster getOrThrow(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EncounterMonsterNotFoundException(id));
+    }
+
+    private EncounterMonsterResponse toResponse(EncounterMonster em) {
+        return new EncounterMonsterResponse(
+                em.getId(),
+                em.getMonster().getId(),
+                em.getMonster().getName(),
+                em.getEncounter().getId(),
+                em.getCurrentHp(),
+                em.isAlive(),
+                em.isBoss(),
+                em.getNotes()
+        );
     }
 }
