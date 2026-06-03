@@ -13,7 +13,7 @@ import se.yrgo.services.encounterMonster.EncounterMonsterService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/encounterMonsters")
+@RequestMapping("/api/encounter-monsters")
 public class EncounterMonsterController {
 
     private final EncounterMonsterService service;
@@ -51,6 +51,12 @@ public class EncounterMonsterController {
         return toResponse(service.getEncounterMonsterById(id));
     }
 
+    @GetMapping("/by-encounter/{encounterId}")
+    public List<EncounterMonsterResponse> getEncounterMonstersByEncounterId(
+            @PathVariable Long encounterId) {
+
+        return service.getEncounterMonstersByEncounterId(encounterId);
+    }
 
 
     // HELP METHODS
