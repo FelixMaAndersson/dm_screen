@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.Campaign;
 import se.yrgo.dto.campaign.CampaignResponse;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;
-import se.yrgo.dto.monster.MonsterResponse;
 import se.yrgo.exceptions.CampaignNotFoundException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.campaign.CampaignService;
