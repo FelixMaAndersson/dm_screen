@@ -84,6 +84,10 @@ public class Encounter {
         this.encounterMonsters = encounterMonsters;
     }
 
+    public void addEncounterMonster(EncounterMonster em) {
+        encounterMonsters.add(em);
+    }
+
     public Difficulty getEncounterDifficulty() {
         return encounterDifficulty;
     }
@@ -98,6 +102,14 @@ public class Encounter {
 
     public void setPlayerCharacters(Set<PlayerCharacter> playerCharacters) {
         this.playerCharacters = playerCharacters;
+    }
+
+    public void addPlayerCharacter(PlayerCharacter playerCharacter) {
+        playerCharacters.add(playerCharacter);
+    }
+
+    public void removePlayerCharacter(PlayerCharacter playerCharacter) {
+        playerCharacters.remove(playerCharacter);
     }
 
     public String getLore() {
