@@ -3,7 +3,7 @@ package se.yrgo.exceptions;
 public class EncounterMonsterNotFoundException extends RuntimeException {
 
     public EncounterMonsterNotFoundException(long id) {
-        super("Monster not found with id: " + id);
+        super("Encounter monster not found with id: " + id);
     }
 
     public EncounterMonsterNotFoundException(String name) {

@@ -23,7 +23,7 @@ public class EncounterMonsterService {
 
     // CREATE
 
-    public EncounterMonster createEncounterMonster(CreateEncounterMonsterRequest request) {
+    public void createEncounterMonster(CreateEncounterMonsterRequest request) {
         EncounterMonster encounterMonster = new EncounterMonster(
                 request.monster(),
                 request.encounter(),
@@ -33,15 +33,14 @@ public class EncounterMonsterService {
                 request.notes()
         );
 
-        return repository.save(encounterMonster);
+        repository.save(encounterMonster);
 
     }
 
     // READ
 
     public EncounterMonster getEncounterMonsterById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new EncounterMonsterNotFoundException(id));
+        return getOrThrow(id);
     }
 
     public List<EncounterMonster> getAllEncounterMonsters() {
@@ -53,10 +52,9 @@ public class EncounterMonsterService {
     }
 
     // UPDATE
-    public EncounterMonster updateEncounterMonster(Long id, UpdateEncounterMonsterRequest request) {
+    public void updateEncounterMonster(Long id, UpdateEncounterMonsterRequest request) {
 
-        EncounterMonster encounterMonster = repository.findById(id)
-                .orElseThrow(() -> new EncounterMonsterNotFoundException(id));
+        EncounterMonster encounterMonster = getOrThrow(id);
 
         encounterMonster.setMonster(request.monster());
         encounterMonster.setEncounter(request.encounter());
@@ -64,44 +62,46 @@ public class EncounterMonsterService {
         encounterMonster.setAlive(request.alive());
         encounterMonster.setBoss(request.boss());
         encounterMonster.setNotes(request.notes());
-
-        return repository.save(encounterMonster);
     }
 
-    public EncounterMonster updateHp(Long id, UpdateHpRequest request) {
-        EncounterMonster monster = getEncounterMonsterById(id);
+    public void updateHp(Long id, UpdateHpRequest request) {
+        EncounterMonster monster = getOrThrow(id);
+
         monster.setCurrentHp(request.currentHp());
 
         if (request.currentHp() <= 0) {
             monster.setAlive(false);
         }
 
-        return repository.save(monster);
     }
 
-    public EncounterMonster updateAlive(Long id, UpdateAliveRequest request) {
+    public void updateAlive(Long id, UpdateAliveRequest request) {
 
-        EncounterMonster monster = getEncounterMonsterById(id);
+        EncounterMonster monster = getOrThrow(id);
 
         monster.setAlive(request.alive());
-
-        return repository.save(monster);
     }
 
-    public EncounterMonster updateNotes(
+    public void updateNotes(
             Long id,
             UpdateNotesRequest request) {
 
-        EncounterMonster monster = getEncounterMonsterById(id);
+        EncounterMonster monster = getOrThrow(id);
 
         monster.setNotes(request.notes());
-
-        return repository.save(monster);
     }
 
     // DELETE
 
-    public void deleteEncounterMonster(Long id) throws EncounterMonsterNotFoundException {
-        repository.deleteById(id);
+    public void deleteEncounterMonster(Long id) {
+        EncounterMonster monster = getOrThrow(id);
+        repository.delete(monster);
+    }
+
+    // HELP METHODS
+
+    private EncounterMonster getOrThrow(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EncounterMonsterNotFoundException(id));
     }
 }
