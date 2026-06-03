@@ -2,6 +2,7 @@ package se.yrgo.dataaccess;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.yrgo.domain.EncounterMonster;
+import se.yrgo.dto.EncounterMonster.EncounterMonsterResponse;
 
 import java.util.List;
 
