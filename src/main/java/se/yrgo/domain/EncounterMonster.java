@@ -17,16 +17,14 @@ public class EncounterMonster {
     @JoinColumn(name = "encounter_id")
     private Encounter encounter;
 
-    private String name;
     private int currentHp;
     private boolean alive;
     private boolean boss;
     private String notes;
 
-    public EncounterMonster(Monster monster, Encounter encounter, String name, int currentHp, boolean alive, boolean boss, String notes) {
+    public EncounterMonster(Monster monster, Encounter encounter, int currentHp, boolean alive, boolean boss, String notes) {
         this.monster = monster;
         this.encounter = encounter;
-        this.name = name;
         this.currentHp = currentHp;
         this.alive = alive;
         this.boss = boss;
@@ -47,14 +45,6 @@ public class EncounterMonster {
 
     public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getCurrentHp() {
