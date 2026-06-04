@@ -3,6 +3,7 @@ import CampaignList from "./components/CampaignList";
 import CampaignDetails from "./components/CampaignDetails";
 import CreateCampaignForm from "./components/CreateCampaignForm.tsx";
 import CreateUserForm from "./components/CreateUserForm.tsx";
+import CreateMonsterForm from "./components/CreateMonsterForm.tsx";
 
 export type Campaign = {
     id: number;
@@ -25,8 +26,9 @@ function App() {
         <div>
             <h1>D&D Screen</h1>
 
-            <CreateUserForm/>
-            <CreateCampaignForm/>
+            <CreateUserForm />
+            <CreateMonsterForm />
+            <CreateCampaignForm />
             <CampaignList
                 onSelectCampaign={setSelectedCampaign}
             />
