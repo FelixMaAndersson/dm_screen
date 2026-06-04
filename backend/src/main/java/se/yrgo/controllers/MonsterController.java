@@ -1,11 +1,13 @@
 package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import se.yrgo.dataaccess.MonsterRepository;
 import se.yrgo.domain.Monster;
 import se.yrgo.dto.monster.CreateMonsterRequest;
 import se.yrgo.dto.monster.MonsterResponse;
 import se.yrgo.dto.monster.UpdateMonsterRequest;
-import se.yrgo.exceptions.MonsterNotFoundException;
+import se.yrgo.exceptions.monster.MonsterNotFoundException;
+import se.yrgo.exceptions.user.UserAlreadyExistsException;
 import se.yrgo.services.monster.MonsterService;
 import java.util.List;
 
@@ -15,9 +17,11 @@ import java.util.List;
 public class MonsterController {
 
     private final MonsterService service;
+    private final MonsterRepository repository;
 
-    public MonsterController(MonsterService service) {
+    public MonsterController(MonsterService service, MonsterRepository repository) {
         this.service = service;
+        this.repository = repository;
     }
 
     // CREATE
@@ -26,6 +30,12 @@ public class MonsterController {
     public MonsterResponse createMonster(
             @RequestBody CreateMonsterRequest request
     ) {
+        if (repository.existsByName(request.name())) {
+            throw new UserAlreadyExistsException(
+                    "Monster with name '" + request.name() + "' already exists");
+        }
+
+
         Monster monster = service.createMonster(request);
         return toResponse(monster);
     }

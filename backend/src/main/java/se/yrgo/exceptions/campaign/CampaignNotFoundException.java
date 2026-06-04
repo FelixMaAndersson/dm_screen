@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.campaign;
 
 /**
  * Thrown when a requested league cannot be found in the database.

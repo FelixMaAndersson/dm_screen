@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.user;
 
 /**
  * Exception thrown when a player with the given id

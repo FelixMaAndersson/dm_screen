@@ -6,8 +6,8 @@ import se.yrgo.domain.User;
 import se.yrgo.dto.user.CreateUserRequest;
 import se.yrgo.dto.user.UpdateUserRequest;
 import se.yrgo.dto.user.UserResponse;
-import se.yrgo.exceptions.UserAlreadyExistsException;
-import se.yrgo.exceptions.UserNotFoundException;
+import se.yrgo.exceptions.user.UserAlreadyExistsException;
+import se.yrgo.exceptions.user.UserNotFoundException;
 import se.yrgo.services.user.UserService;
 
 import java.util.List;

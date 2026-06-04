@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.playerCharacter;
 
 public class PlayerCharacterNotFoundException extends RuntimeException {
     public PlayerCharacterNotFoundException(Long id) {

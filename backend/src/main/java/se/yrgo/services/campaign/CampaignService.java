@@ -9,12 +9,10 @@ import se.yrgo.domain.Campaign;
 import se.yrgo.domain.User;
 import se.yrgo.dto.campaign.CreateCampaignRequest;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;
-import se.yrgo.exceptions.CampaignNotFoundException;
-import se.yrgo.exceptions.UserNotFoundException;
-import se.yrgo.services.user.UserService;
+import se.yrgo.exceptions.campaign.CampaignNotFoundException;
+import se.yrgo.exceptions.user.UserNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

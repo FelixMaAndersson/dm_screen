@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.encounterMonster;
 
 public class EncounterMonsterNotFoundException extends RuntimeException {
 
