@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/monsters")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MonsterController {
 
     private final MonsterService service;
