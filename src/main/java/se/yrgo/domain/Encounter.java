@@ -25,9 +25,6 @@ public class Encounter {
     @OneToMany(mappedBy = "encounter")
     private Set<EncounterMonster> encounterMonsters = new HashSet<>();
 
-    @Enumerated(EnumType.STRING)
-    private Difficulty encounterDifficulty;
-
     @ManyToMany
     @JoinTable(
             name = "encounter_player_character",
@@ -88,12 +85,8 @@ public class Encounter {
         encounterMonsters.add(em);
     }
 
-    public Difficulty getEncounterDifficulty() {
-        return encounterDifficulty;
-    }
-
-    public void setEncounterDifficulty(Difficulty encounterDifficulty) {
-        this.encounterDifficulty = encounterDifficulty;
+    public void removeEncounterMonster(EncounterMonster em) {
+        encounterMonsters.remove(em);
     }
 
     public Set<PlayerCharacter> getPlayerCharacters() {

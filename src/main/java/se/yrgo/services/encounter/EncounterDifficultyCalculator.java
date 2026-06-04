@@ -8,10 +8,22 @@ import se.yrgo.domain.enums.Difficulty;
 public class EncounterDifficultyCalculator {
 
     public Difficulty calculate(Encounter encounter) {
-        // räkna total monster XP
-        // räkna multiplier beroende på antal monster
-        // räkna party thresholds beroende på PCs level
-        // jämför och returnera TRIVIAL/EASY/MEDIUM/HARD/DEADLY
-        return null;
+        int monsterCount = encounter.getEncounterMonsters().size();
+        int pcCount = encounter.getPlayerCharacters().size();
+
+        if (monsterCount == 0 || pcCount == 0) {
+            return Difficulty.TRIVIAL;
+        }
+
+        // tillfällig förenklad logik
+        if (monsterCount < pcCount) {
+            return Difficulty.EASY;
+        } else if (monsterCount == pcCount) {
+            return Difficulty.MEDIUM;
+        } else if (monsterCount <= pcCount * 2) {
+            return Difficulty.HARD;
+        } else {
+            return Difficulty.DEADLY;
+        }
     }
 }
