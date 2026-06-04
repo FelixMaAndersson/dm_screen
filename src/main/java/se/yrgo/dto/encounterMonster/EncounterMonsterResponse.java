@@ -1,7 +1,4 @@
-package se.yrgo.dto.EncounterMonster;
-
-import se.yrgo.domain.Encounter;
-import se.yrgo.domain.Monster;
+package se.yrgo.dto.encounterMonster;
 
 public record EncounterMonsterResponse(
         Long id,

@@ -1,4 +1,4 @@
-package se.yrgo.dto.EncounterMonster;
+package se.yrgo.dto.encounterMonster;
 
 import se.yrgo.domain.Encounter;
 import se.yrgo.domain.Monster;
