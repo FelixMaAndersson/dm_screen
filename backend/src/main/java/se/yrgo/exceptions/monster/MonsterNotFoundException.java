@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.monster;
 
 import se.yrgo.domain.enums.*;
 

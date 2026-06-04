@@ -8,7 +8,7 @@ import se.yrgo.domain.Monster;
 import se.yrgo.domain.enums.*;
 import se.yrgo.dto.monster.CreateMonsterRequest;
 import se.yrgo.dto.monster.UpdateMonsterRequest;
-import se.yrgo.exceptions.MonsterNotFoundException;
+import se.yrgo.exceptions.monster.MonsterNotFoundException;
 
 import java.util.List;
 

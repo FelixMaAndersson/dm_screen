@@ -1,4 +1,4 @@
-package se.yrgo.exceptions;
+package se.yrgo.exceptions.playerCharacter;
 
 /**
  * Custom exception thrown when a team is not found in the database.

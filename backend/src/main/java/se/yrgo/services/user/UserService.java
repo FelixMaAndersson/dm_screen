@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.User;
 import se.yrgo.dto.user.UpdateUserRequest;
-import se.yrgo.exceptions.UserNotFoundException;
+import se.yrgo.exceptions.user.UserNotFoundException;
 
 import java.util.List;
 

@@ -23,4 +23,6 @@ public interface MonsterRepository extends JpaRepository<Monster, Long> {
 
     List<Monster> findByHabitat(Habitat habitat);
 
+    boolean existsByName(String name);
+
 }

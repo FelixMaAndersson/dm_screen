@@ -3,7 +3,7 @@ package se.yrgo.controllers;
 import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.EncounterMonster;
 import se.yrgo.dto.encounterMonster.*;
-import se.yrgo.exceptions.EncounterMonsterNotFoundException;
+import se.yrgo.exceptions.encounterMonster.EncounterMonsterNotFoundException;
 import se.yrgo.services.encounterMonster.EncounterMonsterService;
 
 import java.util.List;

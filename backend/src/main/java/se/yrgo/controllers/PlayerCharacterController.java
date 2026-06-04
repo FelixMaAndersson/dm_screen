@@ -5,9 +5,9 @@ import se.yrgo.domain.PlayerCharacter;
 import se.yrgo.dto.character.CreatePlayerCharacterRequest;
 import se.yrgo.dto.character.PlayerCharacterResponse;
 import se.yrgo.dto.character.UpdatePlayerCharacterRequest;
-import se.yrgo.exceptions.CampaignNotFoundException;
-import se.yrgo.exceptions.CharacterNotFoundException;
-import se.yrgo.exceptions.UserNotFoundException;
+import se.yrgo.exceptions.campaign.CampaignNotFoundException;
+import se.yrgo.exceptions.playerCharacter.CharacterNotFoundException;
+import se.yrgo.exceptions.user.UserNotFoundException;
 import se.yrgo.services.playerCharacter.PlayerCharacterService;
 
 import java.util.List;
