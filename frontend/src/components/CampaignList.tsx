@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getCampaigns } from "../api/campaignsApi";
+import type { Campaign } from "../App";
 
-type Campaign = {
-    id: number;
-    name: string;
+type CampaignListProps = {
+    onSelectCampaign: (campaign: Campaign) => void;
 };
 
-function CampaignList() {
+function CampaignList({ onSelectCampaign }: CampaignListProps) {
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 
     useEffect(() => {
@@ -18,18 +18,14 @@ function CampaignList() {
         loadCampaigns();
     }, []);
 
-    function selectCampaign(campaign: Campaign) {
-        console.log("Selected campaign:", campaign);
-    }
-
     return (
         <div>
-            <h2>Campaigns</h2>
+            <h2>Choose a campaign to play</h2>
 
             {campaigns.map(campaign => (
                 <button
                     key={campaign.id}
-                    onClick={() => selectCampaign(campaign)}
+                    onClick={() => onSelectCampaign(campaign)}
                 >
                     {campaign.name}
                 </button>
