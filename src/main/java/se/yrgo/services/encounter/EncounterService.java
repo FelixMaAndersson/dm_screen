@@ -51,10 +51,6 @@ public class EncounterService {
 
     // READ
 
-    private Encounter getEncounterById(Long id) {
-        return getOrThrow(id);
-    }
-
     public List<Encounter> getAllEncounters() {
         return repository.findAll();
     }
@@ -64,6 +60,10 @@ public class EncounterService {
                 .stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    private Encounter getEncounterById(Long id) {
+        return getOrThrow(id);
     }
 
     public List<EncounterResponse> getEncountersByDifficulty(Difficulty difficulty) {
