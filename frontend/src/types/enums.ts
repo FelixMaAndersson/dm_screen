@@ -1,4 +1,5 @@
 export type Alignment =
+    | "ANY_ALIGNMENT"
     | "LAWFUL_GOOD"
     | "NEUTRAL_GOOD"
     | "CHAOTIC_GOOD"

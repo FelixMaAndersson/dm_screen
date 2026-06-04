@@ -7,6 +7,7 @@ import type {
     Habitat,
     ChallengeRating
 } from "../types/enums";
+import * as React from "react";
 
 function CreateMonsterForm() {
     const [name, setName] = useState("");
@@ -14,12 +15,12 @@ function CreateMonsterForm() {
     const [xp, setXp] = useState("");
     const [type, setType] = useState<MonsterType>("BEAST");
     const [size, setSize] = useState<CreatureSize>("MEDIUM");
-    const [alignment, setAlignment] = useState<Alignment>("TRUE_NEUTRAL");
+    const [alignment, setAlignment] = useState<Alignment>("ANY_ALIGNMENT");
     const [habitat, setHabitat] = useState<Habitat>("FOREST");
     const [hp, setHp] = useState("");
     const [tag, setTag] = useState("");
 
-    async function handleSubmit(event: React.FormEvent) {
+    async function handleSubmit(event: React.SubmitEvent) {
         event.preventDefault();
 
         await createMonster({
@@ -39,7 +40,7 @@ function CreateMonsterForm() {
         setXp("");
         setType("BEAST");
         setSize("MEDIUM");
-        setAlignment("TRUE_NEUTRAL");
+        setAlignment("ANY_ALIGNMENT");
         setHabitat("FOREST");
         setHp("");
         setTag("");
@@ -134,6 +135,7 @@ function CreateMonsterForm() {
             <div>
                 <label>Alignment</label>
                 <select value={alignment} onChange={e => setAlignment(e.target.value as Alignment)}>
+                    <option value="ANY_ALIGNMENT">Any alignment</option>
                     <option value="LAWFUL_GOOD">Lawful good</option>
                     <option value="NEUTRAL_GOOD">Neutral good</option>
                     <option value="CHAOTIC_GOOD">Chaotic good</option>
