@@ -1,18 +1,34 @@
-function CampaignList() {
-    const campaigns = [
-        { id: 1, name: "Curse of Strahd" },
-        { id: 2, name: "Eberron" },
-        { id: 3, name: "Lost Mine of Phandelver" }
-    ];
+import { useEffect, useState } from "react";
+import { getCampaigns } from "../api/campaignsApi";
+import type { Campaign } from "../App";
+
+type CampaignListProps = {
+    onSelectCampaign: (campaign: Campaign) => void;
+};
+
+function CampaignList({ onSelectCampaign }: CampaignListProps) {
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+    useEffect(() => {
+        async function loadCampaigns() {
+            const data = await getCampaigns();
+            setCampaigns(data);
+        }
+
+        loadCampaigns();
+    }, []);
 
     return (
         <div>
-            <h2>Campaigns</h2>
+            <h2>Choose a campaign to play</h2>
 
             {campaigns.map(campaign => (
-                <p key={campaign.id}>
+                <button
+                    key={campaign.id}
+                    onClick={() => onSelectCampaign(campaign)}
+                >
                     {campaign.name}
-                </p>
+                </button>
             ))}
         </div>
     );
