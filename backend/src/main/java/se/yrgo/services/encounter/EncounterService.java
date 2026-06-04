@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.*;
 import se.yrgo.domain.*;
+import se.yrgo.domain.campaign.Campaign;
 import se.yrgo.domain.enums.Difficulty;
 import se.yrgo.dto.encounter.*;
 import se.yrgo.dto.encounterMonster.EncounterMonsterSummary;

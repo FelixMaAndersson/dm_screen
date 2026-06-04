@@ -1,6 +1,7 @@
 package se.yrgo.domain;
 
 import jakarta.persistence.*;
+import se.yrgo.domain.campaign.Campaign;
 
 import java.util.HashSet;
 import java.util.Set;

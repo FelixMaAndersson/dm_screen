@@ -1,7 +1,7 @@
 package se.yrgo.domain;
 
 import jakarta.persistence.*;
-import se.yrgo.domain.enums.Difficulty;
+import se.yrgo.domain.campaign.Campaign;
 import se.yrgo.domain.enums.Habitat;
 
 import java.util.HashSet;

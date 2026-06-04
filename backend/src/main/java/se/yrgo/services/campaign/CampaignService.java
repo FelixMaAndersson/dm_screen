@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.CampaignRepository;
 import se.yrgo.dataaccess.UserRepository;
-import se.yrgo.domain.Campaign;
+import se.yrgo.domain.campaign.Campaign;
 import se.yrgo.domain.User;
 import se.yrgo.dto.campaign.CreateCampaignRequest;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;

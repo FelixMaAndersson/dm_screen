@@ -1,6 +1,9 @@
-package se.yrgo.domain;
+package se.yrgo.domain.campaign;
 
 import jakarta.persistence.*;
+import se.yrgo.domain.Encounter;
+import se.yrgo.domain.PlayerCharacter;
+import se.yrgo.domain.User;
 
 import java.util.Set;
 
@@ -21,6 +24,9 @@ public class Campaign {
     @ManyToOne
     @JoinColumn(name = "dm_id")
     private User dm;
+
+    @Embedded
+    private CampaignDate currentDate;
 
     @OneToMany(mappedBy = "campaign")
     private Set<PlayerCharacter> character;

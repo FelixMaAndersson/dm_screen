@@ -1,7 +1,7 @@
 package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import se.yrgo.domain.Campaign;
+import se.yrgo.domain.campaign.Campaign;
 import se.yrgo.dto.campaign.CampaignResponse;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;
 import se.yrgo.exceptions.campaign.CampaignNotFoundException;
