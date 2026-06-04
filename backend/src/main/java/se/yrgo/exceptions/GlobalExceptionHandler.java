@@ -1,6 +1,7 @@
 package se.yrgo.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import se.yrgo.dto.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleCharacterNotFound(CharacterNotFoundException ex) {
         return new ErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExists(
+            UserAlreadyExistsException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
     }
 }
