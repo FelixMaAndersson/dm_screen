@@ -1,10 +1,12 @@
 package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.User;
 import se.yrgo.dto.user.CreateUserRequest;
 import se.yrgo.dto.user.UpdateUserRequest;
 import se.yrgo.dto.user.UserResponse;
+import se.yrgo.exceptions.UserAlreadyExistsException;
 import se.yrgo.exceptions.UserNotFoundException;
 import se.yrgo.services.user.UserService;
 
@@ -16,15 +18,24 @@ import java.util.List;
 public class UserController {
 
     private final UserService service;
+    private final UserRepository repository;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, UserRepository repository) {
         this.service = service;
+        this.repository = repository;
     }
 
     // CREATE
 
     @PostMapping
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
+
+
+        if (repository.existsByName(request.name())) {
+            throw new UserAlreadyExistsException(
+                    "User with name '" + request.name() + "' already exists");
+        }
+
         User user = service.createUser(
                 request.name(),
                 request.password()
