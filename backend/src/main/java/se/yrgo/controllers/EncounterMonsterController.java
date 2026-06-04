@@ -80,7 +80,7 @@ public class EncounterMonsterController {
         return service.updateAlive(id, request);
     }
 
-    @PatchMapping("/{id}/hp")
+    @PatchMapping("/{id}/notes")
     public EncounterMonsterResponse updateNotes(
             @PathVariable Long id,
             @RequestBody UpdateNotesRequest request) {
