@@ -18,6 +18,9 @@ public class Monster {
     private ChallengeRating cr;
 
     @Column(nullable = false)
+    private int xp;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MonsterType type;
 
@@ -35,9 +38,10 @@ public class Monster {
 
     private String tags;
 
-    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, Alignment alignment, int hp, String tags) {
+    public Monster(String name, ChallengeRating cr, int xp, MonsterType type, CreatureSize size, Habitat habitat, Alignment alignment, int hp, String tags) {
         this.name = name;
         this.cr = cr;
+        this.xp = xp;
         this.type = type;
         this.size = size;
         this.habitat = habitat;
@@ -76,6 +80,14 @@ public class Monster {
 
     public void setCr(ChallengeRating cr) {
         this.cr = cr;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
     }
 
     public MonsterType getType() {

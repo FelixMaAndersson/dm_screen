@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class EncounterService {
 
-    private final EncounterRepository repository;
+    private final EncounterRepository encounterRepository;
     private final CampaignRepository campaignRepository;
     private final PlayerCharacterRepository playerCharacterRepository;
     private final EncounterMonsterRepository encounterMonsterRepository;
@@ -24,8 +24,8 @@ public class EncounterService {
     private final MonsterRepository monsterRepository;
 
     @Autowired
-    public EncounterService(EncounterRepository repository, CampaignRepository campaignRepository, PlayerCharacterRepository playerCharacterRepository, EncounterMonsterRepository encounterMonsterRepository, EncounterDifficultyCalculator difficultyCalculator, MonsterRepository monsterRepository) {
-        this.repository = repository;
+    public EncounterService(EncounterRepository encounterRepository, CampaignRepository campaignRepository, PlayerCharacterRepository playerCharacterRepository, EncounterMonsterRepository encounterMonsterRepository, EncounterDifficultyCalculator difficultyCalculator, MonsterRepository monsterRepository) {
+        this.encounterRepository = encounterRepository;
         this.campaignRepository = campaignRepository;
         this.playerCharacterRepository = playerCharacterRepository;
         this.encounterMonsterRepository = encounterMonsterRepository;
@@ -35,7 +35,7 @@ public class EncounterService {
 
     // CREATE
 
-    public Encounter createEncounter(CreateEncounterRequest request) throws CampaignNotFoundException {
+    public Encounter createEncounter(CreateEncounterRequest request) {
         Campaign campaign = campaignRepository.findById(request.campaignId())
                 .orElseThrow(() -> new CampaignNotFoundException(request.campaignId()));
 
@@ -45,20 +45,20 @@ public class EncounterService {
                 campaign
         );
 
-        return repository.save(e);
+        return encounterRepository.save(e);
     }
 
     // READ
 
     public List<EncounterResponse> getAllEncounters() {
-        return repository.findAll()
+        return encounterRepository.findAll()
                 .stream()
                 .map(this::toResponse)
                 .toList();
     }
 
     public List<EncounterResponse> getAllEncountersInCampaign(Long campaignId) {
-        return repository.findByCampaignId(campaignId)
+        return encounterRepository.findByCampaignId(campaignId)
                 .stream()
                 .map(this::toResponse)
                 .toList();
@@ -135,18 +135,41 @@ public class EncounterService {
     }
 
     public EncounterResponse buildEncounterWithDifficulty(
-            Long id,
-            Difficulty targetDifficulty) {
+            Long encounterId,
+            BuildEncounterRequest request) {
 
-        Encounter e = getOrThrow(id);
+        Encounter encounter = getOrThrow(encounterId);
 
-        // TODO: Generate encounter by adding monsters until target difficulty is reached
+        List<Monster> candidates = monsterRepository.findByHabitat(request.habitat());
 
-        return toResponse(e);
+        for (Monster monster : candidates) {
+            EncounterMonster em = new EncounterMonster(
+                    monster,
+                    encounter,
+                    monster.getHp(),
+                    true,
+                    false,
+                    ""
+            );
+
+            encounter.addEncounterMonster(em);
+
+            Difficulty currentDifficulty = difficultyCalculator.calculate(encounter);
+
+            if (currentDifficulty == request.targetDifficulty()) {
+                return toResponse(encounter);
+            }
+
+            if (isHarderThan(currentDifficulty, request.targetDifficulty())) {
+                encounter.removeEncounterMonster(em);
+            }
+        }
+
+        return toResponse(encounter);
     }
 
     public List<EncounterResponse> getEncountersByDifficulty(Difficulty difficulty) {
-        return repository.findAll()
+        return encounterRepository.findAll()
                 .stream()
                 .filter(e -> difficultyCalculator.calculate(e) == difficulty)
                 .map(this::toResponse)
@@ -157,13 +180,17 @@ public class EncounterService {
 
     public void deleteEncounter(Long id) {
         Encounter e = getOrThrow(id);
-        repository.delete(e);
+        encounterRepository.delete(e);
     }
 
     // HELP METHODS
 
+    private boolean isHarderThan(Difficulty current, Difficulty target) {
+        return current.ordinal() > target.ordinal();
+    }
+
     private Encounter getOrThrow(Long id) {
-        return repository.findById(id)
+        return encounterRepository.findById(id)
                 .orElseThrow(() -> new EncounterNotFoundException(id));
     }
 

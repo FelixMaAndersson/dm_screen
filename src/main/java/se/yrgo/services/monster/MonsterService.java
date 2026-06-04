@@ -30,10 +30,12 @@ public class MonsterService {
         Monster monster = new Monster(
                 request.name(),
                 request.cr(),
+                request.xp(),
                 request.type(),
                 request.size(),
                 request.habitat(),
                 request.alignment(),
+                request.hp(),
                 request.tags()
         );
 
@@ -42,18 +44,26 @@ public class MonsterService {
 
     // READ
 
-    public Monster getMonsterById(Long id) throws MonsterNotFoundException {
+    public List<Monster> getAllMonsters() {
+        return repository.findAll();
+    }
+
+    public Monster getMonsterById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new MonsterNotFoundException(id));
     }
 
-    public Monster getMonstersByName(String name) throws MonsterNotFoundException {
+    public Monster getMonstersByName(String name) {
         return repository.findByName(name)
                 .orElseThrow(() -> new MonsterNotFoundException(name));
     }
 
     public List<Monster> getMonstersByCr(ChallengeRating cr) {
         return repository.findByCr(cr);
+    }
+
+    public List<Monster> getMonsterByXp(int xp) {
+        return repository.findByXp(xp);
     }
 
     public List<Monster> getMonstersByType(MonsterType type) {
@@ -72,10 +82,6 @@ public class MonsterService {
         return repository.findByHabitat(habitat);
     }
 
-    public List<Monster> getAllMonsters() {
-        return repository.findAll();
-    }
-
     // UPDATE
 
     public Monster updateMonster(Long id, UpdateMonsterRequest request) {
@@ -84,10 +90,12 @@ public class MonsterService {
 
         monster.setName(request.name());
         monster.setCr(request.cr());
+        monster.setXp(request.xp());
         monster.setType(request.type());
         monster.setSize(request.size());
         monster.setAlignment(request.alignment());
         monster.setHabitat(request.habitat());
+        monster.setHp(request.hp());
         monster.setTags(request.tags());
 
         return repository.save(monster);

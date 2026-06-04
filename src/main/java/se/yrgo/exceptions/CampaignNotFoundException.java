@@ -4,7 +4,7 @@ package se.yrgo.exceptions;
  * Thrown when a requested league cannot be found in the database.
  * This is a checked exception that must be handled by the caller.
  */
-public class CampaignNotFoundException extends Exception {
+public class CampaignNotFoundException extends RuntimeException {
 
 
     public CampaignNotFoundException(String name) {

@@ -13,6 +13,8 @@ public interface MonsterRepository extends JpaRepository<Monster, Long> {
 
     List<Monster> findByCr(ChallengeRating cr);
 
+    List<Monster> findByXp(int xp);
+
     List<Monster> findByType(MonsterType type);
 
     List<Monster> findBySize(CreatureSize size);
