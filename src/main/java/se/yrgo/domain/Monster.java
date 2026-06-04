@@ -31,15 +31,18 @@ public class Monster {
     @Enumerated(EnumType.STRING)
     private Habitat habitat;
 
+    private int hp;
+
     private String tags;
 
-    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, Alignment alignment, String tags) {
+    public Monster(String name, ChallengeRating cr, MonsterType type, CreatureSize size, Habitat habitat, Alignment alignment, int hp, String tags) {
         this.name = name;
         this.cr = cr;
         this.type = type;
         this.size = size;
         this.habitat = habitat;
         this.alignment = alignment;
+        this.hp = hp;
         this.tags = tags;
     }
 
@@ -97,6 +100,14 @@ public class Monster {
 
     public void setHabitat(Habitat habitat) {
         this.habitat = habitat;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     public String getTags() {

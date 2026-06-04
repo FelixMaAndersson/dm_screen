@@ -22,7 +22,10 @@ public class Encounter {
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
-    @OneToMany(mappedBy = "encounter")
+    @OneToMany(
+            mappedBy = "encounter",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<EncounterMonster> encounterMonsters = new HashSet<>();
 
     @ManyToMany
@@ -83,10 +86,12 @@ public class Encounter {
 
     public void addEncounterMonster(EncounterMonster em) {
         encounterMonsters.add(em);
+        em.setEncounter(this);
     }
 
     public void removeEncounterMonster(EncounterMonster em) {
         encounterMonsters.remove(em);
+        em.setEncounter(null);
     }
 
     public Set<PlayerCharacter> getPlayerCharacters() {
