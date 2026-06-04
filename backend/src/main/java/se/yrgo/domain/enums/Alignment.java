@@ -1,6 +1,7 @@
 package se.yrgo.domain.enums;
 
 public enum Alignment {
+    ANY_ALIGNMENT,
     LAWFUL_GOOD,
     NEUTRAL_GOOD,
     CHAOTIC_GOOD,
