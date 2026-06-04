@@ -18,3 +18,13 @@ export async function createCampaign(request: CreateCampaignRequest) {
 
     return response.json();
 }
+
+export async function getCampaigns() {
+    const response = await fetch("http://localhost:8080/api/campaigns");
+
+    if (!response.ok) {
+        throw new Error("Could not fetch campaigns");
+    }
+
+    return response.json();
+}
