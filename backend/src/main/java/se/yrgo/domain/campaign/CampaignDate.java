@@ -60,4 +60,8 @@ public class CampaignDate {
         return ((day - 1) / 10) + 1;
     }
 
+    public String getMonthName() {
+        return Month.fromNumber(month).name();
+    }
+
 }
