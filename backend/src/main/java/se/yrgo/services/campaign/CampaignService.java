@@ -39,7 +39,8 @@ public class CampaignService {
 
         Campaign campaign = new Campaign(
                 request.name(),
-                dm
+                dm,
+                request.currentDate()
         );
 
         return repository.save(campaign);
