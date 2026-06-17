@@ -80,18 +80,12 @@ public class EncounterController {
     // DELETE
 
     @DeleteMapping("/{id}/monsters/{encounterMonsterId}")
-    public EncounterResponse removeMonsterFromEncounter(
-            @PathVariable Long id,
-            @PathVariable Long encounterMonsterId
-    ) {
+    public EncounterResponse removeMonsterFromEncounter(@PathVariable Long id, @PathVariable Long encounterMonsterId) {
         return service.removeMonsterFromEncounter(id, encounterMonsterId);
     }
 
     @DeleteMapping("/{id}/characters/{playerCharacterId}")
-    public EncounterResponse removeCharacterFromEncounter(
-            @PathVariable Long id,
-            @PathVariable Long playerCharacterId
-    ) {
+    public EncounterResponse removeCharacterFromEncounter(@PathVariable Long id, @PathVariable Long playerCharacterId) {
         return service.removeCharacterFromEncounter(id, playerCharacterId);
     }
 
@@ -99,5 +93,4 @@ public class EncounterController {
     public void deleteEncounter(@PathVariable Long id) {
         service.deleteEncounter(id);
     }
-
 }
