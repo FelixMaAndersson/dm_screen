@@ -65,6 +65,9 @@ public class EncounterMonsterController {
         return service.updateEncounterMonster(id, request);
     }
 
+
+
+    //kolla upp @RequestParam istället för PathVariable
     @PatchMapping("/{id}/hp")
     public EncounterMonsterResponse updateHp(
             @PathVariable Long id,
