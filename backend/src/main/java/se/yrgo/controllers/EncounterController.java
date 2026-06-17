@@ -32,9 +32,8 @@ public class EncounterController {
     public EncounterResponse createEncounter(
             @RequestBody CreateEncounterRequest request
             ) {
-        Encounter e = service.createEncounter(request);
 
-        return toResponse(e);
+        return createEncounter(request);
     }
 
     // HELP METHODS
