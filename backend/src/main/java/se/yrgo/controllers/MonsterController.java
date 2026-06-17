@@ -30,31 +30,22 @@ public class MonsterController {
     public MonsterResponse createMonster(
             @RequestBody CreateMonsterRequest request
     ) {
-        if (repository.existsByName(request.name())) {
-            throw new UserAlreadyExistsException(
-                    "Monster with name '" + request.name() + "' already exists");
-        }
 
-
-        Monster monster = service.createMonster(request);
-        return toResponse(monster);
+        return service.createMonster(request);
     }
 
     // READ
 
     @GetMapping
     public List<MonsterResponse> getAllMonsters() {
-        return service.getAllMonsters()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        return service.getAllMonsters();
     }
 
     @GetMapping("/{id}")
     public MonsterResponse getMonsterById(@PathVariable Long id)
             throws MonsterNotFoundException {
 
-        return toResponse(service.getMonsterById(id));
+        return service.getMonsterById(id);
     }
 
     // UPDATE
@@ -64,11 +55,8 @@ public class MonsterController {
             @PathVariable Long id,
             @RequestBody UpdateMonsterRequest request
     ) throws MonsterNotFoundException {
-        Monster updatedMonster = service.updateMonster(
-                id,
-                request
-        );
-        return toResponse(updatedMonster);
+
+        return service.updateMonster(id, request);
     }
 
     // DELETE
@@ -76,20 +64,5 @@ public class MonsterController {
     @DeleteMapping("/{id}")
     public void deleteMonster(@PathVariable Long id) {
      service.deleteMonster(id);
-    }
-
-    // HELP METHODS
-
-    private MonsterResponse toResponse(Monster monster) {
-        return new MonsterResponse(
-                monster.getId(),
-                monster.getName(),
-                monster.getCr(),
-                monster.getType(),
-                monster.getSize(),
-                monster.getAlignment(),
-                monster.getHabitat(),
-                monster.getTags()
-        );
     }
 }
