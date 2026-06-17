@@ -1,6 +1,6 @@
 package se.yrgo.dto.encounter;
 
-public record UpdatePlayerCharacterRequest(
+public record AddPlayerCharacterToEncounterRequest(
         Long playerCharacterId,
         String playerCharacterName
 ) {
