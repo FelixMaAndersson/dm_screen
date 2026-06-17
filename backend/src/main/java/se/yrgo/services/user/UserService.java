@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.User;
 import se.yrgo.dto.user.UpdateUserRequest;
+import se.yrgo.dto.user.UserResponse;
+import se.yrgo.exceptions.user.UserAlreadyExistsException;
 import se.yrgo.exceptions.user.UserNotFoundException;
 
 import java.util.List;
@@ -21,35 +23,40 @@ public class UserService {
 
     // CREATE
 
-    public User createUser(String name, String password) {
+    public UserResponse createUser(String name, String password) {
+
+        if (repository.existsByName(name)) {
+            throw new UserAlreadyExistsException(
+                    "User with name '" + name + "' already exists");
+        }
 
         User user = new User(name, password);
 
-        return repository.save(user);
+        return toResponse(repository.save(user));
     }
 
     // READ
 
-    public User getUserById(Long id) throws UserNotFoundException {
+    public UserResponse getUserById(Long id) throws UserNotFoundException {
 
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new UserNotFoundException(id));
+        return toResponse(repository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
     }
 
-    public User getUserByUsername(String name) throws UserNotFoundException {
+    public UserResponse getUserByUsername(String name) throws UserNotFoundException {
 
-        return repository.findByName(name)
-                .orElseThrow(() -> new UserNotFoundException(name));
+        return toResponse(repository.findByName(name).orElseThrow(() -> new UserNotFoundException(name)));
     }
 
-    public List<User> getAllUsers() {
-        return repository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return repository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     // UPDATE
 
-    public User updateUser(Long id, UpdateUserRequest request)
+    public UserResponse updateUser(Long id, UpdateUserRequest request)
             throws UserNotFoundException {
 
         User user = repository.findById(id)
@@ -58,7 +65,7 @@ public class UserService {
         user.setName(request.name());
         user.setPassword(request.password());
 
-        return repository.save(user);
+        return toResponse(repository.save(user));
     }
 
     // DELETE
@@ -66,4 +73,11 @@ public class UserService {
     public void deleteUser(Long id) {
         repository.deleteById(id);
     }
+
+    // HELP METHODS
+
+    public UserResponse toResponse(User user) {
+        return new UserResponse(user.getId(), user.getName());
+    }
+
 }
