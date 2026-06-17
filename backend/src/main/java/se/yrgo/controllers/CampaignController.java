@@ -77,7 +77,8 @@ public class CampaignController {
         return new CampaignResponse(
                 campaign.getId(),
                 campaign.getName(),
-                campaign.getDm().getName()
+                campaign.getDm().getName(),
+                campaign.getDescription()
         );
     }
 
