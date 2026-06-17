@@ -7,8 +7,10 @@ import se.yrgo.dataaccess.MonsterRepository;
 import se.yrgo.domain.Monster;
 import se.yrgo.domain.enums.*;
 import se.yrgo.dto.monster.CreateMonsterRequest;
+import se.yrgo.dto.monster.MonsterResponse;
 import se.yrgo.dto.monster.UpdateMonsterRequest;
 import se.yrgo.exceptions.monster.MonsterNotFoundException;
+import se.yrgo.exceptions.user.UserAlreadyExistsException;
 
 import java.util.List;
 
@@ -25,7 +27,12 @@ public class MonsterService {
 
     // CREATE
 
-    public Monster createMonster(CreateMonsterRequest request) {
+    public MonsterResponse createMonster(CreateMonsterRequest request) {
+
+        if (repository.existsByName(request.name())) {
+            throw new UserAlreadyExistsException(
+                    "Monster with name '" + request.name() + "' already exists");
+        }
 
         Monster monster = new Monster(
                 request.name(),
@@ -39,52 +46,71 @@ public class MonsterService {
                 request.tags()
         );
 
-        return repository.save(monster);
+        return toResponse(repository.save(monster));
     }
 
     // READ
 
-    public List<Monster> getAllMonsters() {
-        return repository.findAll();
+    public List<MonsterResponse> getAllMonsters() {
+        return repository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Monster getMonsterById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new MonsterNotFoundException(id));
+    public MonsterResponse getMonsterById(Long id) {
+        return toResponse(repository.findById(id).orElseThrow(() -> new MonsterNotFoundException(id)));
     }
 
-    public Monster getMonstersByName(String name) {
-        return repository.findByName(name)
-                .orElseThrow(() -> new MonsterNotFoundException(name));
+    public MonsterResponse getMonstersByName(String name) {
+        return toResponse(repository.findByName(name).orElseThrow(() -> new MonsterNotFoundException(name)));
     }
 
-    public List<Monster> getMonstersByCr(ChallengeRating cr) {
-        return repository.findByCr(cr);
+    public List<MonsterResponse> getMonstersByCr(ChallengeRating cr) {
+        return repository.findByCr(cr)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Monster> getMonsterByXp(int xp) {
-        return repository.findByXp(xp);
+    public List<MonsterResponse> getMonsterByXp(int xp) {
+        return repository.findByXp(xp)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Monster> getMonstersByType(MonsterType type) {
-        return repository.findByType(type);
+    public List<MonsterResponse> getMonstersByType(MonsterType type) {
+        return repository.findByType(type)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Monster> getMonstersBySize(CreatureSize size) {
-        return repository.findBySize(size);
+    public List<MonsterResponse> getMonstersBySize(CreatureSize size) {
+        return repository.findBySize(size)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Monster> getMonstersByAlignment(Alignment alignment) {
-        return repository.findByAlignment(alignment);
+    public List<MonsterResponse> getMonstersByAlignment(Alignment alignment) {
+        return repository.findByAlignment(alignment)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public List<Monster> getMonstersByHabitat(Habitat habitat) {
-        return repository.findByHabitat(habitat);
+    public List<MonsterResponse> getMonstersByHabitat(Habitat habitat) {
+        return repository.findByHabitat(habitat)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     // UPDATE
 
-    public Monster updateMonster(Long id, UpdateMonsterRequest request) {
+    public MonsterResponse updateMonster(Long id, UpdateMonsterRequest request) {
         Monster monster = repository.findById(id)
                 .orElseThrow(() -> new MonsterNotFoundException(id));
 
@@ -98,12 +124,27 @@ public class MonsterService {
         monster.setHp(request.hp());
         monster.setTags(request.tags());
 
-        return repository.save(monster);
+        return toResponse(repository.save(monster));
     }
 
     // DELETE
 
     public void deleteMonster(Long id) throws MonsterNotFoundException {
         repository.deleteById(id);
+    }
+
+    // HELP METHODS
+
+    private MonsterResponse toResponse(Monster monster) {
+        return new MonsterResponse(
+                monster.getId(),
+                monster.getName(),
+                monster.getCr(),
+                monster.getType(),
+                monster.getSize(),
+                monster.getAlignment(),
+                monster.getHabitat(),
+                monster.getTags()
+        );
     }
 }

@@ -32,28 +32,7 @@ public class EncounterController {
     public EncounterResponse createEncounter(
             @RequestBody CreateEncounterRequest request
             ) {
-        Encounter e = service.createEncounter(request);
 
-        return toResponse(e);
-    }
-
-    // HELP METHODS
-
-    private EncounterResponse toResponse(Encounter e) {
-
-        Difficulty difficulty = difficultyCalculator.calculate(e);
-
-
-
-        return new EncounterResponse(
-                e.getId(),
-                e.getHabitat(),
-                e.getVisionDistance(),
-                e.getCampaign().getId(),
-                e.getCampaign().getName(),
-                service.toSumarizedMonsters(e),
-                difficulty,
-                e.getLore()
-        );
+        return createEncounter(request);
     }
 }

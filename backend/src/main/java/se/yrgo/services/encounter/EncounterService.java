@@ -40,7 +40,7 @@ public class EncounterService {
 
     // CREATE
 
-    public Encounter createEncounter(CreateEncounterRequest request) {
+    public EncounterResponse createEncounter(CreateEncounterRequest request) {
         Campaign campaign = campaignRepository.findById(request.campaignId())
                 .orElseThrow(() -> new CampaignNotFoundException(request.campaignId()));
 
@@ -50,7 +50,9 @@ public class EncounterService {
                 campaign
         );
 
-        return encounterRepository.save(e);
+        Encounter saved = encounterRepository.save(e);
+
+        return toResponse(saved);
     }
 
     // READ

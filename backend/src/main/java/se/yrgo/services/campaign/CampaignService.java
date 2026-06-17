@@ -7,6 +7,7 @@ import se.yrgo.dataaccess.CampaignRepository;
 import se.yrgo.dataaccess.UserRepository;
 import se.yrgo.domain.campaign.Campaign;
 import se.yrgo.domain.User;
+import se.yrgo.dto.campaign.CampaignResponse;
 import se.yrgo.dto.campaign.CreateCampaignRequest;
 import se.yrgo.dto.campaign.UpdateCampaignRequest;
 import se.yrgo.exceptions.campaign.CampaignNotFoundException;
@@ -31,7 +32,7 @@ public class CampaignService {
 
     // CREATE
 
-    public Campaign createCampaign(CreateCampaignRequest request) throws UserNotFoundException {
+    public CampaignResponse createCampaign(CreateCampaignRequest request) throws UserNotFoundException {
 
         User dm = userRepository.findById(request.dmId())
                 .orElseThrow(() ->
@@ -43,28 +44,36 @@ public class CampaignService {
                 request.currentDate()
         );
 
-        return repository.save(campaign);
+        return toResponse(repository.save(campaign));
     }
 
     // READ
 
-    public Campaign getCampaignById(Long id) throws CampaignNotFoundException {
-        return repository.findById(id)
+    public CampaignResponse getCampaignById(Long id) throws CampaignNotFoundException {
+
+        Campaign c = repository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(id));
+
+        return toResponse(c);
     }
 
-    public Campaign getCampaignByName(String name) throws CampaignNotFoundException {
-        return repository.findByName(name)
+    public CampaignResponse getCampaignByName(String name) throws CampaignNotFoundException {
+        Campaign c = repository.findByName(name)
                 .orElseThrow(() -> new CampaignNotFoundException(name));
+
+        return toResponse(c);
     }
 
-    public List<Campaign> getAllCampaigns() {
-        return repository.findAll();
+    public List<CampaignResponse> getAllCampaigns() {
+        return repository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     // UPDATE
 
-    public Campaign updateCampaign(Long id, UpdateCampaignRequest request) throws CampaignNotFoundException, UserNotFoundException {
+    public CampaignResponse updateCampaign(Long id, UpdateCampaignRequest request) throws CampaignNotFoundException, UserNotFoundException {
         Campaign campaign = repository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(id));
 
@@ -75,13 +84,25 @@ public class CampaignService {
         campaign.setName(request.name());
         campaign.setDescription(request.description());
         campaign.setDm(dm);
-        return repository.save(campaign);
+
+        return toResponse(repository.save(campaign));
     }
 
     // DELETE
 
     public void deleteCampaign(Long id) {
         repository.deleteById(id);
+    }
+
+    // HELP METHODS
+
+    private CampaignResponse toResponse(Campaign campaign) {
+        return new CampaignResponse(
+                campaign.getId(),
+                campaign.getName(),
+                campaign.getDm().getName(),
+                campaign.getDescription()
+        );
     }
 
 }

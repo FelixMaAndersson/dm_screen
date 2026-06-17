@@ -30,31 +30,18 @@ public class UserController {
     @PostMapping
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
 
-
-        if (repository.existsByName(request.name())) {
-            throw new UserAlreadyExistsException(
-                    "User with name '" + request.name() + "' already exists");
-        }
-
-        User user = service.createUser(
-                request.name(),
-                request.password()
-        );
-        return toResponse(user);
+        return service.createUser(request.name(), request.password());
     }
 
     // READ
 
     @GetMapping
     public List<UserResponse> getAllUsers() {
-        return service.getAllUsers()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        return service.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User findUserById(@PathVariable Long id) throws UserNotFoundException {
+    public UserResponse findUserById(@PathVariable Long id) throws UserNotFoundException {
         return service.getUserById(id);
     }
 
@@ -66,12 +53,7 @@ public class UserController {
             @RequestBody UpdateUserRequest request)
             throws UserNotFoundException {
 
-        User updatedUser = service.updateUser(
-                id,
-                request
-        );
-
-        return toResponse(updatedUser);
+        return service.updateUser(id, request);
     }
 
     // DELETE
@@ -80,11 +62,4 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         service.deleteUser(id);
     }
-
-    // HELP METHOD
-
-    public UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getName());
-    }
-
 }

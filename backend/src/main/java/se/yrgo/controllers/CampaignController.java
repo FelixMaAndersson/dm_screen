@@ -29,24 +29,18 @@ public class CampaignController {
             @RequestBody CreateCampaignRequest request)
             throws UserNotFoundException {
 
-        Campaign campaign =
-                service.createCampaign(request);
-
-        return toResponse(campaign);
+        return service.createCampaign(request);
     }
 
     // READ
 
     @GetMapping
     public List<CampaignResponse> getAllCampaigns() {
-        return service.getAllCampaigns()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        return service.getAllCampaigns();
     }
 
     @GetMapping("/{id}")
-    public Campaign getCampaignById(@PathVariable Long id) throws CampaignNotFoundException {
+    public CampaignResponse getCampaignById(@PathVariable Long id) throws CampaignNotFoundException {
         return service.getCampaignById(id);
     }
 
@@ -56,12 +50,12 @@ public class CampaignController {
     public CampaignResponse updateCampaign(
             @PathVariable Long id,
             @RequestBody UpdateCampaignRequest request)
-            throws CampaignNotFoundException, UserNotFoundException  {
-        Campaign updatedCampaign = service.updateCampaign(
+            throws CampaignNotFoundException, UserNotFoundException {
+
+        return service.updateCampaign(
                 id,
                 request
         );
-        return toResponse(updatedCampaign);
     }
 
     // DELETE
@@ -70,17 +64,4 @@ public class CampaignController {
     public void deleteCampaign(@PathVariable Long id) {
         service.deleteCampaign(id);
     }
-
-    // HELP METHODS
-
-    private CampaignResponse toResponse (Campaign campaign) {
-        return new CampaignResponse(
-                campaign.getId(),
-                campaign.getName(),
-                campaign.getDm().getName(),
-                campaign.getDescription()
-        );
-    }
-
-
 }

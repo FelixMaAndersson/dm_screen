@@ -23,7 +23,7 @@ public class EncounterMonsterService {
 
     // CREATE
 
-    public EncounterMonster createEncounterMonster(CreateEncounterMonsterRequest request) {
+    public EncounterMonsterResponse createEncounterMonster(CreateEncounterMonsterRequest request) {
         EncounterMonster encounterMonster = new EncounterMonster(
                 request.monster(),
                 request.encounter(),
@@ -33,18 +33,21 @@ public class EncounterMonsterService {
                 request.notes()
         );
 
-       return repository.save(encounterMonster);
+       return toResponse(repository.save(encounterMonster));
 
     }
 
     // READ
 
-    public EncounterMonster getEncounterMonsterById(Long id) {
-        return getOrThrow(id);
+    public EncounterMonsterResponse getEncounterMonsterById(Long id) {
+        return toResponse(getOrThrow(id));
     }
 
-    public List<EncounterMonster> getAllEncounterMonsters() {
-        return repository.findAll();
+    public List<EncounterMonsterResponse> getAllEncounterMonsters() {
+        return repository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     public List<EncounterMonsterResponse> getEncounterMonstersByEncounterId(Long encounterId) {
