@@ -1,7 +1,7 @@
 package se.yrgo.dataaccess;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import se.yrgo.domain.Campaign;
+import se.yrgo.domain.campaign.Campaign;
 
 import java.util.Optional;
 

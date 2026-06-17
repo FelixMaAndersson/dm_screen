@@ -1,6 +1,9 @@
-package se.yrgo.domain;
+package se.yrgo.domain.campaign;
 
 import jakarta.persistence.*;
+import se.yrgo.domain.Encounter;
+import se.yrgo.domain.PlayerCharacter;
+import se.yrgo.domain.User;
 
 import java.util.Set;
 
@@ -22,16 +25,19 @@ public class Campaign {
     @JoinColumn(name = "dm_id")
     private User dm;
 
+    @Embedded
+    private CampaignDate currentDate;
+
     @OneToMany(mappedBy = "campaign")
     private Set<PlayerCharacter> character;
 
     @OneToMany(mappedBy = "campaign")
     private Set<Encounter> encounters;
 
-    public Campaign(String name, String description, User dm) {
+    public Campaign(String name, User dm, CampaignDate currentDate) {
         this.name = name;
-        this.description = description;
         this.dm = dm;
+        this.currentDate = currentDate;
     }
 
     public Campaign() {
@@ -42,6 +48,7 @@ public class Campaign {
         this.name = name;
         this.dm = dm;
     }
+
 
     public String getName() {
         return name;
@@ -65,6 +72,14 @@ public class Campaign {
 
     public void setDm(User dm) {
         this.dm = dm;
+    }
+
+    public CampaignDate getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(CampaignDate currentDate) {
+        this.currentDate = currentDate;
     }
 
     public Set<PlayerCharacter> getCharacter() {

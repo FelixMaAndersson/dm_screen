@@ -32,7 +32,6 @@ public class EncounterMonster {
     }
 
     public EncounterMonster() {
-
     }
 
     public Long getId() {
