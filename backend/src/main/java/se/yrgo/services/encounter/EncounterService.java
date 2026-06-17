@@ -55,38 +55,6 @@ public class EncounterService {
         return toResponse(saved);
     }
 
-    // READ
-
-    public List<EncounterResponse> getAllEncounters() {
-        return encounterRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    public List<EncounterResponse> getAllEncountersInCampaign(Long campaignId) {
-        return encounterRepository.findByCampaignId(campaignId)
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    public EncounterResponse getEncounterById(Long id) {
-        return toResponse(getOrThrow(id));
-    }
-
-    public List<EncounterMonsterSummary> toSumarizedMonsters(Encounter e) {
-
-       return e.getEncounterMonsters()
-                .stream()
-                .map(em -> new EncounterMonsterSummary(
-                        em.getId(),
-                        em.getMonster().getName()
-                ))
-                .toList();
-
-    }
-
     // UPDATE
 
     public EncounterResponse addCharacterToEncounter(Long id, UpdatePlayerCharacterRequest request) {
@@ -144,6 +112,45 @@ public class EncounterService {
         return toResponse(e);
     }
 
+    // READ
+
+    public List<EncounterResponse> getAllEncounters() {
+        return encounterRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public List<EncounterResponse> getAllEncountersInCampaign(Long campaignId) {
+        return encounterRepository.findByCampaignId(campaignId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public EncounterResponse getEncounterById(Long id) {
+        return toResponse(getOrThrow(id));
+    }
+
+    public List<EncounterMonsterSummary> toSummarizedMonsters(Encounter e) {
+
+        return e.getEncounterMonsters()
+                .stream()
+                .map(em -> new EncounterMonsterSummary(
+                        em.getId(),
+                        em.getMonster().getName()
+                ))
+                .toList();
+
+    }
+
+    // DELETE
+
+    public void deleteEncounter(Long id) {
+        Encounter e = getOrThrow(id);
+        encounterRepository.delete(e);
+    }
+
     // BUSINESS LOGIC - DIFFICULTY
 
     public Difficulty calculateDifficulty(Long id) {
@@ -195,13 +202,6 @@ public class EncounterService {
                 .toList();
     }
 
-    // DELETE
-
-    public void deleteEncounter(Long id) {
-        Encounter e = getOrThrow(id);
-        encounterRepository.delete(e);
-    }
-
     // HELP METHODS
 
     private boolean isHarderThan(Difficulty current, Difficulty target) {
@@ -223,7 +223,7 @@ public class EncounterService {
                 e.getVisionDistance(),
                 e.getCampaign().getId(),
                 e.getCampaign().getName(),
-                toSumarizedMonsters(e),
+                toSummarizedMonsters(e),
                 difficulty,
                 e.getLore()
         );

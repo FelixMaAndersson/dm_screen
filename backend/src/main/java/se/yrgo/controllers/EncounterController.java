@@ -1,9 +1,6 @@
 package se.yrgo.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.yrgo.domain.Encounter;
 import se.yrgo.domain.enums.Difficulty;
 import se.yrgo.dto.encounter.CreateEncounterRequest;
@@ -29,10 +26,13 @@ public class EncounterController {
 
     // CREATE
 
+    @PostMapping
     public EncounterResponse createEncounter(
             @RequestBody CreateEncounterRequest request
             ) {
 
-        return createEncounter(request);
+        return service.createEncounter(request);
     }
+
+
 }
