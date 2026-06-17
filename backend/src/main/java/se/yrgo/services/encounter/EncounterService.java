@@ -73,6 +73,18 @@ public class EncounterService {
         return toResponse(getOrThrow(id));
     }
 
+    public List<EncounterMonsterSummary> toSumarizedMonsters(Encounter e) {
+
+       return e.getEncounterMonsters()
+                .stream()
+                .map(em -> new EncounterMonsterSummary(
+                        em.getId(),
+                        em.getMonster().getName()
+                ))
+                .toList();
+
+    }
+
     // UPDATE
 
     public EncounterResponse addCharacterToEncounter(Long id, UpdatePlayerCharacterRequest request) {
@@ -200,15 +212,6 @@ public class EncounterService {
     }
 
     private EncounterResponse toResponse(Encounter e) {
-        List<EncounterMonsterSummary> monsters =
-                e.getEncounterMonsters()
-                        .stream()
-                        .map(em -> new EncounterMonsterSummary(
-                                em.getId(),
-                                em.getMonster().getId(),
-                                em.getMonster().getName()
-                        ))
-                        .toList();
 
         Difficulty difficulty = difficultyCalculator.calculate(e);
 
@@ -218,7 +221,7 @@ public class EncounterService {
                 e.getVisionDistance(),
                 e.getCampaign().getId(),
                 e.getCampaign().getName(),
-                monsters,
+                toSumarizedMonsters(e),
                 difficulty,
                 e.getLore()
         );
