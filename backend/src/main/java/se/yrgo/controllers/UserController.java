@@ -62,11 +62,4 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         service.deleteUser(id);
     }
-
-    // HELP METHOD
-
-    public UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getName());
-    }
-
 }
