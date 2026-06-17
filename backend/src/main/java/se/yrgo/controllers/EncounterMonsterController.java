@@ -25,9 +25,8 @@ public class EncounterMonsterController {
     public EncounterMonsterResponse createEncounterMonster(
             @RequestBody CreateEncounterMonsterRequest request
             ) {
-        EncounterMonster encounterMonster = service.createEncounterMonster(request);
 
-        return toResponse(encounterMonster);
+        return service.createEncounterMonster(request);
 
     }
 
@@ -35,17 +34,14 @@ public class EncounterMonsterController {
 
     @GetMapping
     public List<EncounterMonsterResponse> getAllEncounterMonsters() {
-        return service.getAllEncounterMonsters()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        return service.getAllEncounterMonsters();
     }
 
     @GetMapping("/{id}")
     public EncounterMonsterResponse getEncounterMonsterById(@PathVariable Long id)
             throws EncounterMonsterNotFoundException {
 
-        return toResponse(service.getEncounterMonsterById(id));
+        return service.getEncounterMonsterById(id);
     }
 
     @GetMapping("/by-encounter/{encounterId}")
@@ -64,8 +60,6 @@ public class EncounterMonsterController {
 
         return service.updateEncounterMonster(id, request);
     }
-
-
 
     //kolla upp @RequestParam istället för PathVariable
     @PatchMapping("/{id}/hp")
@@ -99,18 +93,5 @@ public class EncounterMonsterController {
         service.deleteEncounterMonster(id);
     }
 
-    // HELP METHODS
 
-    private EncounterMonsterResponse toResponse(EncounterMonster em) {
-        return new EncounterMonsterResponse(
-                em.getId(),
-                em.getMonster().getId(),
-                em.getMonster().getName(),
-                em.getEncounter().getId(),
-                em.getCurrentHp(),
-                em.isAlive(),
-                em.isBoss(),
-                em.getNotes()
-        );
-    }
 }
