@@ -35,24 +35,4 @@ public class EncounterController {
 
         return createEncounter(request);
     }
-
-    // HELP METHODS
-
-    private EncounterResponse toResponse(Encounter e) {
-
-        Difficulty difficulty = difficultyCalculator.calculate(e);
-
-
-
-        return new EncounterResponse(
-                e.getId(),
-                e.getHabitat(),
-                e.getVisionDistance(),
-                e.getCampaign().getId(),
-                e.getCampaign().getName(),
-                service.toSumarizedMonsters(e),
-                difficulty,
-                e.getLore()
-        );
-    }
 }
