@@ -1,7 +1,6 @@
 package se.yrgo.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import se.yrgo.domain.PlayerCharacter;
 import se.yrgo.dto.character.CreatePlayerCharacterRequest;
 import se.yrgo.dto.character.PlayerCharacterResponse;
 import se.yrgo.dto.character.UpdatePlayerCharacterRequest;
@@ -31,9 +30,7 @@ public class PlayerCharacterController {
             @RequestBody CreatePlayerCharacterRequest request)
             throws CampaignNotFoundException {
 
-        PlayerCharacter character = service.createCharacter(campaignId, request);
-
-        return toResponse(character);
+        return service.createCharacter(campaignId, request);
     }
 
     // READ
@@ -42,17 +39,15 @@ public class PlayerCharacterController {
     public List<PlayerCharacterResponse> getAllCharacters(
             @PathVariable Long campaignId) {
 
-        return service.getCharactersForCampaign(campaignId)
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        return service.getCharactersForCampaign(campaignId);
     }
 
     @GetMapping("/{id}")
-    public PlayerCharacter getCharacterById(
+    public PlayerCharacterResponse getCharacterById(
             @PathVariable Long campaignId,
             @PathVariable Long id
     ) throws CharacterNotFoundException {
+
         return service.getCharacterById(id);
     }
 
@@ -65,14 +60,7 @@ public class PlayerCharacterController {
             @RequestBody UpdatePlayerCharacterRequest request)
             throws UserNotFoundException {
 
-        PlayerCharacter updatedPlayerCharacter = service.updateCharacter(
-                id,
-                request
-        );
-
-        return toResponse(updatedPlayerCharacter);
-
-
+        return service.updateCharacter(id, request);
     }
 
     // DELETE
@@ -82,21 +70,7 @@ public class PlayerCharacterController {
     public void deleteCharacter(
             @PathVariable Long campaignId,
             @PathVariable Long id) {
+
         service.deleteCharacter(id);
     }
-
-    // HELP METHODS
-
-    private PlayerCharacterResponse toResponse(PlayerCharacter character) {
-        return new PlayerCharacterResponse(
-                character.getId(),
-                character.getName(),
-                character.getRace().name(),
-                character.getCharacterClass().name(),
-                character.getLevel(),
-                character.getCampaign().getId(),
-                character.getCampaign().getName()
-        );
-    }
-
 }
