@@ -77,8 +77,6 @@ public class EncounterController {
         return service.addMonsterToEncounter(id, request);
     }
 
-    // DELETE
-
     @DeleteMapping("/{id}/monsters/{encounterMonsterId}")
     public EncounterResponse removeMonsterFromEncounter(@PathVariable Long id, @PathVariable Long encounterMonsterId) {
         return service.removeMonsterFromEncounter(id, encounterMonsterId);
@@ -88,6 +86,8 @@ public class EncounterController {
     public EncounterResponse removeCharacterFromEncounter(@PathVariable Long id, @PathVariable Long playerCharacterId) {
         return service.removeCharacterFromEncounter(id, playerCharacterId);
     }
+
+    // DELETE
 
     @DeleteMapping("/{id}")
     public void deleteEncounter(@PathVariable Long id) {
