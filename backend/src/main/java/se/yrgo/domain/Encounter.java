@@ -36,6 +36,8 @@ public class Encounter {
     )
     private Set<PlayerCharacter> playerCharacters = new HashSet<>();
 
+    private boolean completed = false;
+
     private String lore;
 
     public Encounter(Habitat habitat, int visionDistance, Campaign campaign) {
@@ -108,6 +110,14 @@ public class Encounter {
 
     public void removePlayerCharacter(PlayerCharacter playerCharacter) {
         playerCharacters.remove(playerCharacter);
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getLore() {
