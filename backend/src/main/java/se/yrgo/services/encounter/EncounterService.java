@@ -55,9 +55,30 @@ public class EncounterService {
         return toResponse(saved);
     }
 
+
+    // READ
+
+    public List<EncounterResponse> getAllEncounters() {
+        return encounterRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public List<EncounterResponse> getAllEncountersInCampaign(Long campaignId) {
+        return encounterRepository.findByCampaignId(campaignId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public EncounterResponse getEncounterById(Long id) {
+        return toResponse(getOrThrow(id));
+    }
+
     // UPDATE
 
-    public EncounterResponse addCharacterToEncounter(Long id, UpdatePlayerCharacterRequest request) {
+    public EncounterResponse addCharacterToEncounter(Long id, AddPlayerCharacterToEncounterRequest request) {
         Encounter e = getOrThrow(id);
 
 
@@ -89,60 +110,29 @@ public class EncounterService {
         return toResponse(e);
     }
 
-    public EncounterResponse removeCharacterFromEncounter(Long id, UpdatePlayerCharacterRequest request) {
+    public EncounterResponse removeCharacterFromEncounter(Long id, Long characterId) {
         Encounter e = getOrThrow(id);
 
 
-        PlayerCharacter pc = playerCharacterRepository.findById(request.playerCharacterId())
-                .orElseThrow(() -> new PlayerCharacterNotFoundException(request.playerCharacterId()));
+        PlayerCharacter pc = playerCharacterRepository.findById(characterId)
+                .orElseThrow(() -> new PlayerCharacterNotFoundException(characterId));
 
         e.removePlayerCharacter(pc);
 
         return toResponse(e);
     }
 
-    public EncounterResponse removeMonsterFromEncounter(Long id, RemoveEncounterMonsterFromEncounterRequest request) {
+    public EncounterResponse removeMonsterFromEncounter(Long id, Long encounterMonsterId) {
         Encounter e = getOrThrow(id);
 
-        EncounterMonster em = encounterMonsterRepository.findById(request.encounterMonsterId())
-                .orElseThrow(() -> new EncounterMonsterNotFoundException(request.encounterMonsterId()));
+        EncounterMonster em = encounterMonsterRepository.findById(encounterMonsterId)
+                .orElseThrow(() -> new EncounterMonsterNotFoundException(encounterMonsterId));
 
         e.removeEncounterMonster(em);
 
         return toResponse(e);
     }
 
-    // READ
-
-    public List<EncounterResponse> getAllEncounters() {
-        return encounterRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    public List<EncounterResponse> getAllEncountersInCampaign(Long campaignId) {
-        return encounterRepository.findByCampaignId(campaignId)
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    public EncounterResponse getEncounterById(Long id) {
-        return toResponse(getOrThrow(id));
-    }
-
-    public List<EncounterMonsterSummary> toSummarizedMonsters(Encounter e) {
-
-        return e.getEncounterMonsters()
-                .stream()
-                .map(em -> new EncounterMonsterSummary(
-                        em.getId(),
-                        em.getMonster().getName()
-                ))
-                .toList();
-
-    }
 
     // DELETE
 
@@ -211,6 +201,18 @@ public class EncounterService {
     private Encounter getOrThrow(Long id) {
         return encounterRepository.findById(id)
                 .orElseThrow(() -> new EncounterNotFoundException(id));
+    }
+
+    public List<EncounterMonsterSummary> toSummarizedMonsters(Encounter e) {
+
+        return e.getEncounterMonsters()
+                .stream()
+                .map(em -> new EncounterMonsterSummary(
+                        em.getId(),
+                        em.getMonster().getName()
+                ))
+                .toList();
+
     }
 
     private EncounterResponse toResponse(Encounter e) {
